@@ -12,8 +12,12 @@
 
     <properties>
         <java.version>11</java.version>
+        <h2.url>jdbc:h2:mem:DbVarMetrics;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS UFS_REQUEST\;SET SCHEMA UFS_REQUEST\;RUNSCRIPT FROM 'classpath:schema.sql';</h2.url>
 
-        <spring-boot-starter>2.1.4.RELEASE</spring-boot-starter>
+
+
+        <spring-boot-starter.version>2.1.4.RELEASE</spring-boot-starter.version>
+        <h2.version>1.4.200</h2.version>
     </properties>
 
     <parent>
@@ -26,7 +30,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring-boot-starter}</version>
+            <version>${spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring-boot-starter.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
@@ -35,7 +51,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot-starter}</version>
+                <version>${spring-boot-starter.version}</version>
             </plugin>
         </plugins>
     </build>
