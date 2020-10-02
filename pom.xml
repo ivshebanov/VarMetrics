@@ -12,7 +12,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <h2.url>jdbc:h2:mem:DbVarMetrics;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS VAR_METRICS\;SET SCHEMA VAR_METRICS\;RUNSCRIPT FROM 'classpath:schema.sql';</h2.url>
+        <h2.url>jdbc:h2:mem:DbVarMetrics;DB_CLOSE_DELAY=-1\;RUNSCRIPT FROM 'classpath:sql/h2-ddl.sql';</h2.url>
 
 
 
