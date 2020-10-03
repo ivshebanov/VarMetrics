@@ -14,10 +14,9 @@
         <java.version>11</java.version>
         <h2.url>jdbc:h2:mem:DbVarMetrics;DB_CLOSE_DELAY=-1\;RUNSCRIPT FROM 'classpath:sql/h2-ddl.sql';</h2.url>
 
-
-
         <spring-boot-starter.version>2.1.4.RELEASE</spring-boot-starter.version>
         <h2.version>1.4.200</h2.version>
+        <lombok.version>1.18.10</lombok.version>
     </properties>
 
     <parent>
@@ -43,6 +42,17 @@
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.10.5</version>
         </dependency>
     </dependencies>
 
