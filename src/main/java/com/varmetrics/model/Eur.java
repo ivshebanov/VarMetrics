@@ -1,5 +1,6 @@
 package com.varmetrics.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -11,14 +12,18 @@ import java.time.ZonedDateTime;
 
 @Data
 @Entity
-@Table(name = "dollar")
-public class Dollar {
+@Table(name = "eur")
+public class Eur {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd:HH.mm.ss")
     private ZonedDateTime date;
 
     private double course;
+
+    public Eur() {
+    }
 }
