@@ -1,7 +1,6 @@
-package com.varmetrics.endpoint;
+package com.varmetrics.euro;
 
-import com.varmetrics.model.Euro;
-import com.varmetrics.repository.EuroRepository;
+import com.varmetrics.model.Eur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,17 +10,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/euro")
-public class EuroEndpoint {
+public class EurEndpoint {
 
-    private final EuroRepository euroRepository;
+    private final EurService eurService;
 
     @Autowired
-    public EuroEndpoint(EuroRepository euroRepository) {
-        this.euroRepository = euroRepository;
+    public EurEndpoint(EurService eurService) {
+        this.eurService = eurService;
     }
 
     @GetMapping("/all")
-    public List<Euro> getEuro() {
-        return euroRepository.findAll();
+    public List<Eur> getAllEur() {
+        return eurService.getAllEur();
     }
 }
