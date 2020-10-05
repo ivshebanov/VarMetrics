@@ -1,11 +1,13 @@
 package com.varmetrics.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.ZonedDateTime;
@@ -25,5 +27,10 @@ public class Usd {
     private double course;
 
     public Usd() {
+    }
+
+    public Usd(ZonedDateTime date, double course) {
+        this.date = date;
+        this.course = course;
     }
 }
