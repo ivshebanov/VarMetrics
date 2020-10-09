@@ -4,7 +4,7 @@ import com.varmetrics.model.Eur;
 import com.varmetrics.model.Usd;
 import com.varmetrics.repository.EurRepository;
 import com.varmetrics.repository.UsdRepository;
-import com.varmetrics.service.сurrency.Сurrency;
+import com.varmetrics.service.сurrency.Currency;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,11 @@ public class WriteUsdAndEur {
 
     private final UsdRepository usdRepository;
     private final EurRepository eurRepository;
-    private final Сurrency currency;
+    private final Currency currency;
     private boolean interrupt = true;
 
     @Autowired
-    public WriteUsdAndEur(UsdRepository usdRepository, EurRepository eurRepository, Сurrency currency) {
+    public WriteUsdAndEur(UsdRepository usdRepository, EurRepository eurRepository, Currency currency) {
         this.usdRepository = usdRepository;
         this.eurRepository = eurRepository;
         this.currency = currency;

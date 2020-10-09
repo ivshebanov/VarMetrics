@@ -3,8 +3,8 @@ package com.varmetrics.configure;
 import com.varmetrics.repository.EurRepository;
 import com.varmetrics.repository.UsdRepository;
 import com.varmetrics.service.WriteUsdAndEur;
-import com.varmetrics.service.сurrency.СurrencyFromYandex;
-import com.varmetrics.service.сurrency.Сurrency;
+import com.varmetrics.service.сurrency.CurrencyFromYandex;
+import com.varmetrics.service.сurrency.Currency;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,12 +12,12 @@ import org.springframework.context.annotation.Configuration;
 public class VarMetricsConfigure {
 
     @Bean
-    public WriteUsdAndEur writeUsdAndEur(UsdRepository usdRepository, EurRepository eurRepository, Сurrency сurrency) {
-        return new WriteUsdAndEur(usdRepository, eurRepository, сurrency);
+    public WriteUsdAndEur writeUsdAndEur(UsdRepository usdRepository, EurRepository eurRepository, Currency currency) {
+        return new WriteUsdAndEur(usdRepository, eurRepository, currency);
     }
 
     @Bean
-    public Сurrency сurrency() {
-        return new СurrencyFromYandex();
+    public Currency currencyFromYandex() {
+        return new CurrencyFromYandex();
     }
 }

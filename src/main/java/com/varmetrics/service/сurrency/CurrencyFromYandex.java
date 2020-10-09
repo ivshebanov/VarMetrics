@@ -6,7 +6,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-public class СurrencyFromYandex implements Сurrency{
+public class CurrencyFromYandex implements Currency {
 
 
     @Override
