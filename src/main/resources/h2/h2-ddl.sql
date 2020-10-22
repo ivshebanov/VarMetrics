@@ -2,5 +2,5 @@ DROP SCHEMA IF EXISTS VAR_METRICS;
 CREATE SCHEMA IF NOT EXISTS VAR_METRICS;
 SET SCHEMA VAR_METRICS;
 
-RUNSCRIPT FROM 'classpath:sql/schema.sql';
--- RUNSCRIPT FROM 'classpath:sql/test_data.sql';
+RUNSCRIPT FROM 'classpath:h2/sql/schema.sql';
+RUNSCRIPT FROM 'classpath:h2/sql/test_data.sql';

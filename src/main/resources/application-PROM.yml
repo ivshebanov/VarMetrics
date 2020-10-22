@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/varmetrics
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: 12345
+  liquibase:
+    enabled: true
+    change-log: classpath:/migration/0001_changelog.xml
