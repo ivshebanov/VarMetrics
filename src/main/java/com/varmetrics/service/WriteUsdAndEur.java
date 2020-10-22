@@ -4,15 +4,15 @@ import com.varmetrics.model.Eur;
 import com.varmetrics.model.Usd;
 import com.varmetrics.repository.EurRepository;
 import com.varmetrics.repository.UsdRepository;
+import com.varmetrics.service.сurrency.Currency;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 public class WriteUsdAndEur {
@@ -21,24 +21,41 @@ public class WriteUsdAndEur {
 
     private final UsdRepository usdRepository;
     private final EurRepository eurRepository;
+    private final Currency currency;
     private boolean interrupt = true;
 
     @Autowired
-    public WriteUsdAndEur(UsdRepository usdRepository, EurRepository eurRepository) {
+    public WriteUsdAndEur(UsdRepository usdRepository, EurRepository eurRepository, Currency currency) {
         this.usdRepository = usdRepository;
         this.eurRepository = eurRepository;
+        this.currency = currency;
     }
 
     public void runWrite() {
-        while (interrupt) {
-            try {
-                setUsd();
-                setEur();
-                TimeUnit.SECONDS.sleep(10);
-            } catch (Exception ex) {
-                logger.error(ex.getMessage(), ex);
+
+        Executors.newSingleThreadExecutor(new DaemonThreadFactory()).execute(() -> {
+
+            while (interrupt) {
+                try {
+                    saveUsd();
+                    saveEur();
+                    TimeUnit.SECONDS.sleep(10);
+                } catch (Exception ex) {
+                    logger.error(ex.getMessage(), ex);
+                }
             }
-        }
+
+        });
+    }
+
+    private void saveUsd() throws IOException {
+
+        usdRepository.save(new Usd(ZonedDateTime.now(), currency.getUsd()));
+    }
+
+    private void saveEur() throws IOException {
+
+        eurRepository.save(new Eur(ZonedDateTime.now(), currency.getEur()));
     }
 
     public String interrupt() {
@@ -46,39 +63,11 @@ public class WriteUsdAndEur {
         return "OK";
     }
 
-    private void setUsd() throws IOException {
-
-        Elements elements = getYandex()
-                .select("div.b-inline.inline-stocks__item.inline-stocks__item_id_2002.hint__item.inline-stocks__part");
-        String courseUsd = elements.select("span.inline-stocks__value_inner").text();
-
-        double courseUsdDouble = Double.parseDouble(courseUsd.replace(",", "."));
-
-        Usd usd = new Usd();
-        usd.setCourse(courseUsdDouble);
-        usd.setDate(ZonedDateTime.now());
-        usdRepository.save(usd);
-    }
-
-    private void setEur() throws IOException {
-
-        Elements elements = getYandex()
-                .select("div.b-inline.inline-stocks__item.inline-stocks__item_id_2000.hint__item.inline-stocks__part");
-        String courseEur = elements.select("span.inline-stocks__value_inner").text();
-
-        double courseEurDouble = Double.parseDouble(courseEur.replace(",", "."));
-
-        Eur eur = new Eur();
-        eur.setCourse(courseEurDouble);
-        eur.setDate(ZonedDateTime.now());
-        eurRepository.save(eur);
-    }
-
-    private Document getYandex() throws IOException {
-        return Jsoup
-                .connect("https://yandex.ru/")
-                .userAgent("Chrome/4.0.249.0 Safari/532.5")
-                .referrer("http://www.google.com")
-                .get();
+    class DaemonThreadFactory implements ThreadFactory {
+        public Thread newThread(Runnable r) {
+            Thread thread = new Thread(r);
+            thread.setDaemon(true);
+            return thread;
+        }
     }
 }
