@@ -12,14 +12,15 @@
 
     <properties>
         <java.version>11</java.version>
-        <h2.url>jdbc:h2:mem:DbVarMetrics;DB_CLOSE_DELAY=-1\;RUNSCRIPT FROM 'classpath:sql/h2-ddl.sql';</h2.url>
+        <h2.url>jdbc:h2:mem:DbVarMetrics;DB_CLOSE_DELAY=-1\;RUNSCRIPT FROM 'classpath:h2/h2-ddl.sql';</h2.url>
 
         <spring-boot-starter.version>2.1.4.RELEASE</spring-boot-starter.version>
         <lombok.version>1.18.10</lombok.version>
         <jsoup.version>1.11.3</jsoup.version>
         <h2.version>1.4.200</h2.version>
-        <postgresql.version>42.2.16</postgresql.version>
+        <postgresql.version>42.2.9</postgresql.version>
         <junit.version>4.13</junit.version>
+        <liquibase-core.version>3.5.1</liquibase-core.version>
     </properties>
 
     <parent>
@@ -65,6 +66,11 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+<!--            <version>${liquibase-core.version}</version>-->
         </dependency>
 
     </dependencies>

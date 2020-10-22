@@ -7,6 +7,6 @@ spring:
     driverClassName: org.postgresql.Driver
     username: postgres
     password: 12345
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    generate-ddl: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/migration/0001_changelog.xml
