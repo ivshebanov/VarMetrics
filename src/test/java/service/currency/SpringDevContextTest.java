@@ -1,4 +1,4 @@
-package service.currency.it;
+package service.currency;
 
 import com.varmetrics.Application;
 import com.varmetrics.repository.EurRepository;

@@ -1,4 +1,4 @@
-package service.currency.it;
+package service.currency;
 
 import com.varmetrics.model.Eur;
 import com.varmetrics.model.Usd;
