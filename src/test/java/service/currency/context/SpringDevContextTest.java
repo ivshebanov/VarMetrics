@@ -1,10 +1,9 @@
-package service.currency;
+package service.currency.context;
 
 import com.varmetrics.Application;
-import com.varmetrics.repository.EurRepository;
-import com.varmetrics.repository.UsdRepository;
+import com.varmetrics.endpoint.dollor.UsdEndpoint;
+import com.varmetrics.endpoint.euro.EurEndpoint;
 import com.varmetrics.service.WriteUsdAndEur;
-import com.varmetrics.service.сurrency.Currency;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,23 +18,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class SpringDevContextTest {
 
     @Autowired
-    public UsdRepository usdRepository;
-
-    @Autowired
-    public EurRepository eurRepository;
-
-    @Autowired
-    private Currency currencyFromYandex;
-
-    @Autowired
     private WriteUsdAndEur writeUsdAndEur;
+
+    @Autowired
+    private EurEndpoint eurEndpoint;
+
+    @Autowired
+    private UsdEndpoint usdEndpoint;
 
 
     @Test
     public void testInit() {
-        Assert.assertNotNull(usdRepository);
-        Assert.assertNotNull(eurRepository);
-        Assert.assertNotNull(currencyFromYandex);
         Assert.assertNotNull(writeUsdAndEur);
+        Assert.assertNotNull(eurEndpoint);
+        Assert.assertNotNull(usdEndpoint);
     }
 }

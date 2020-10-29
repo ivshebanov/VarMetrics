@@ -3,4 +3,4 @@ CREATE SCHEMA IF NOT EXISTS VAR_METRICS;
 SET SCHEMA VAR_METRICS;
 
 RUNSCRIPT FROM 'classpath:h2/sql/schema.sql';
-RUNSCRIPT FROM 'classpath:h2/sql/test_data.sql';
+-- RUNSCRIPT FROM 'classpath:h2/sql/test_data.sql';

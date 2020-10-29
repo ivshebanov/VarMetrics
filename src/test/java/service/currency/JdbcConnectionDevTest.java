@@ -1,15 +1,24 @@
 package service.currency;
 
-import com.varmetrics.model.Eur;
-import com.varmetrics.model.Usd;
+import com.varmetrics.dao.model.Eur;
+import com.varmetrics.dao.model.Usd;
+import com.varmetrics.dao.repository.EurRepository;
+import com.varmetrics.dao.repository.UsdRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import service.currency.context.SpringDevContextTest;
 
 import java.util.List;
 
 public class JdbcConnectionDevTest extends SpringDevContextTest {
+
+    @Autowired
+    public UsdRepository usdRepository;
+
+    @Autowired
+    public EurRepository eurRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

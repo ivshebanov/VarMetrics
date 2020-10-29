@@ -1,6 +1,6 @@
-package com.varmetrics.euro;
+package com.varmetrics.endpoint.euro;
 
-import com.varmetrics.model.Eur;
+import com.varmetrics.dao.model.Eur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

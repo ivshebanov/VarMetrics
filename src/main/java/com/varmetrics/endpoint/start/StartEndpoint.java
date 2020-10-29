@@ -1,4 +1,4 @@
-package com.varmetrics.start;
+package com.varmetrics.endpoint.start;
 
 import com.varmetrics.service.WriteUsdAndEur;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class StartEndpoint {
         this.writeUsdAndEur = writeUsdAndEur;
     }
 
-    @GetMapping("/set-usd")
+    @GetMapping("/run")
     public void setUsd() {
         writeUsdAndEur.runWrite();
     }

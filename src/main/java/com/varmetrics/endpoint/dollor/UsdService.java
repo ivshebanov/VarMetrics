@@ -1,7 +1,7 @@
-package com.varmetrics.dollor;
+package com.varmetrics.endpoint.dollor;
 
-import com.varmetrics.model.Usd;
-import com.varmetrics.repository.UsdRepository;
+import com.varmetrics.dao.model.Usd;
+import com.varmetrics.dao.repository.UsdRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

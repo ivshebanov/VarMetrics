@@ -1,9 +1,10 @@
-package com.varmetrics.model;
+package com.varmetrics.dao.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.varmetrics.dao.ZonedDateTimeDeserializer;
+import com.varmetrics.dao.ZonedDateTimeSerializer;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,8 @@ public class Eur {
     @GeneratedValue
     private Long id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd:HH.mm.ss")
+    @JsonDeserialize(using = ZonedDateTimeDeserializer.class)
+    @JsonSerialize(using = ZonedDateTimeSerializer.class)
     private ZonedDateTime date;
 
     private double course;
