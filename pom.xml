@@ -21,6 +21,7 @@
         <postgresql.version>42.2.9</postgresql.version>
         <junit.version>4.13</junit.version>
         <liquibase-core.version>3.5.1</liquibase-core.version>
+        <rest-assured.version>3.3.0</rest-assured.version>
     </properties>
 
     <parent>
@@ -68,17 +69,22 @@
             <version>${postgresql.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <!--            <version>${liquibase-core.version}</version>-->
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <!--            <version>${liquibase-core.version}</version>-->
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -90,4 +96,71 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Запуск окружения для прогона интеграционных тестов -->
+        <profile>
+            <id>run.it</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                                <configuration>
+                                    <profiles>
+                                        <profile>DEV</profile>
+                                    </profiles>
+                                    <fork>true</fork>
+                                    <systemPropertyVariables>
+                                        <healthcheck.offline>true</healthcheck.offline>
+                                        <ru.sbrf.ufs.platform.envmode.dev>true</ru.sbrf.ufs.platform.envmode.dev>
+                                    </systemPropertyVariables>
+                                    <environmentVariables>
+                                        <STAND_TYPE>DEV</STAND_TYPE>
+                                    </environmentVariables>
+                                    <jvmArguments>--illegal-access=warn</jvmArguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <enableAssertions>true</enableAssertions>
+                            <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
+                            <trimStackTrace>false</trimStackTrace>
+                            <!-- Fix https://stackoverflow.com/a/52532095 -->
+                            <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

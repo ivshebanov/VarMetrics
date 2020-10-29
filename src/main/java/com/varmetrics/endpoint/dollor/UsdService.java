@@ -1,12 +1,13 @@
-package com.varmetrics.dollor;
+package com.varmetrics.endpoint.dollor;
 
-import com.varmetrics.model.Usd;
-import com.varmetrics.repository.UsdRepository;
+import com.varmetrics.dao.model.Usd;
+import com.varmetrics.dao.repository.UsdRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +23,11 @@ public class UsdService {
     }
 
     public List<Usd> getAllUsd() {
-        return usdRepository.findAll();
+        try {
+            return usdRepository.findAll();
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+        return new ArrayList<>();
     }
 }

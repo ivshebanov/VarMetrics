@@ -1,12 +1,13 @@
-package com.varmetrics.euro;
+package com.varmetrics.endpoint.euro;
 
-import com.varmetrics.model.Eur;
-import com.varmetrics.repository.EurRepository;
+import com.varmetrics.dao.model.Eur;
+import com.varmetrics.dao.repository.EurRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +23,11 @@ public class EurService {
     }
 
     public List<Eur> getAllEur() {
-        return eurRepository.findAll();
+        try {
+            return eurRepository.findAll();
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+        return new ArrayList<>();
     }
 }

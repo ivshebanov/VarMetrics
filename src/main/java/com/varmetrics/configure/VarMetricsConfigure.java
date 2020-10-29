@@ -1,10 +1,10 @@
 package com.varmetrics.configure;
 
-import com.varmetrics.repository.EurRepository;
-import com.varmetrics.repository.UsdRepository;
+import com.varmetrics.dao.repository.EurRepository;
+import com.varmetrics.dao.repository.UsdRepository;
 import com.varmetrics.service.WriteUsdAndEur;
-import com.varmetrics.service.сurrency.CurrencyFromYandex;
 import com.varmetrics.service.сurrency.Currency;
+import com.varmetrics.service.сurrency.CurrencyFromYandex;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

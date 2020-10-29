@@ -1,9 +1,9 @@
 package com.varmetrics.service;
 
-import com.varmetrics.model.Eur;
-import com.varmetrics.model.Usd;
-import com.varmetrics.repository.EurRepository;
-import com.varmetrics.repository.UsdRepository;
+import com.varmetrics.dao.model.Eur;
+import com.varmetrics.dao.model.Usd;
+import com.varmetrics.dao.repository.EurRepository;
+import com.varmetrics.dao.repository.UsdRepository;
 import com.varmetrics.service.сurrency.Currency;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,6 +29,7 @@ public class WriteUsdAndEur {
         this.usdRepository = usdRepository;
         this.eurRepository = eurRepository;
         this.currency = currency;
+        runWrite();
     }
 
     public void runWrite() {
@@ -39,7 +40,7 @@ public class WriteUsdAndEur {
                 try {
                     saveUsd();
                     saveEur();
-                    TimeUnit.SECONDS.sleep(10);
+                    TimeUnit.SECONDS.sleep(1000 * 60 * 60);
                 } catch (Exception ex) {
                     logger.error(ex.getMessage(), ex);
                 }
