@@ -1,6 +1,6 @@
 
-var usdUrl = Vue.resource("/usd/all");
-var eurUrl = Vue.resource("/eur/all");
+var usdUrl = Vue.resource("/usd");
+var eurUrl = Vue.resource("/eur");
 
 Vue.component('message-row', {
     props: ['val'],

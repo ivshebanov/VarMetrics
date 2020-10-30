@@ -19,7 +19,7 @@ public class EurEndpoint {
         this.eurService = eurService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Eur> getAllEur() {
         return eurService.getAllEur();
     }
