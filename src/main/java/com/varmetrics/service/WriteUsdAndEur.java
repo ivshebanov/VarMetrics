@@ -40,7 +40,7 @@ public class WriteUsdAndEur {
                 try {
                     saveUsd();
                     saveEur();
-                    TimeUnit.SECONDS.sleep(1000 * 60 * 60);
+                    TimeUnit.HOURS.sleep(24);
                 } catch (Exception ex) {
                     logger.error(ex.getMessage(), ex);
                 }

@@ -14,7 +14,7 @@ public class VarMetricsIT {
 
     @Test
     public void usdAllTest() {
-        List<Usd> usds = sendRequest("/usd/all", Usd.class);
+        List<Usd> usds = sendRequest("/usd", Usd.class);
 
         Assert.assertNotNull(usds);
         Assert.assertNotNull(usds.get(0));
@@ -24,7 +24,7 @@ public class VarMetricsIT {
 
     @Test
     public void eurAllTest() {
-        List<Eur> eurs = sendRequest("/eur/all", Eur.class);
+        List<Eur> eurs = sendRequest("/eur", Eur.class);
 
         Assert.assertNotNull(eurs);
         Assert.assertNotNull(eurs.get(0));

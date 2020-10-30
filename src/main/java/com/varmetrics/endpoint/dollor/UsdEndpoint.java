@@ -19,7 +19,7 @@ public class UsdEndpoint {
         this.usdService = usdService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Usd> getAllUsd() {
         return usdService.getAllUsd();
     }
