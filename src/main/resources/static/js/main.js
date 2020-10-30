@@ -1,30 +1,44 @@
 
-var messageApi = Vue.resource("/usd/all")
+var usdUrl = Vue.resource("/usd/all");
+var eurUrl = Vue.resource("/eur/all");
 
 Vue.component('message-row', {
-    props: ['message'],
-    template: '<div><i>({{ message.date }})</i> {{ message.course }}</div>'
+    props: ['val'],
+    template: '<div>{{ val.date }} ---> {{ val.course }}</div>'
 })
 
 Vue.component('message-list', {
-    props: ['messages'],
+    props: ['usdList', 'eurList'],
     template:
-        '<div>' +
-            '<message-row v-for="message in messages" :key="message.course" :message="message"/>' +
+        '<div align="center">' +
+            '<table border="1">'+
+                '<td>'+
+                    '<message-row v-for="usd in usdList" :key="usd.id" :val="usd"/>' +
+                '</td>' +
+                '<td>'+
+                    '<message-row v-for="eur in eurList" :key="eur.id" :val="eur"/>' +
+                '</td>' +
+            '</table >'+
         '</div>',
     created: function() {
-        messageApi.get().then(result =>
+        usdUrl.get().then(result =>
             result.json().then(data =>
-                data.forEach(message => this.messages.push(message))
+                data.forEach(usd => this.usdList.push(usd)),
             )
         )
-    }
+        eurUrl.get().then(result =>
+            result.json().then(data =>
+                data.forEach(eur => this.eurList.push(eur)),
+            )
+        )
+    },
 })
 
 var app = new Vue({
     el: '#app',
-    template: '<message-list :messages="message"/>',
+    template: '<message-list :usdList="usdList" :eurList="eurList"/>',
     data: {
-        message: []
+        usdList: [],
+        eurList: []
     }
 })
