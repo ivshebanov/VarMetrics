@@ -1,6 +1,6 @@
 # VarMetrics
 
-[Сайт VarMetrics](https://VarMetrics.ru)
+[Сайт VarMetrics](https://varmetrics.herokuapp.com/)
 
 
 ### Сборка 
