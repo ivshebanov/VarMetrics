@@ -14,21 +14,21 @@ import java.util.List;
 
 public class JdbcConnectionDevTest extends SpringDevContextTest {
 
-    @Autowired
+//    @Autowired
     public UsdRepository usdRepository;
 
-    @Autowired
+//    @Autowired
     public EurRepository eurRepository;
 
-    @Autowired
+//    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Test
+//    @Test
     public void dataSourceCheck() {
         jdbcTemplate.execute("SELECT 1 FROM DUAL");
     }
 
-    @Test
+//    @Test
     public void usdRepositoryCheck() {
         List<Usd> usdRepositoryAll = usdRepository.findAll();
 
@@ -36,7 +36,7 @@ public class JdbcConnectionDevTest extends SpringDevContextTest {
         Assert.assertNotNull(usdRepositoryAll.get(0));
     }
 
-    @Test
+//    @Test
     public void eurRepositoryCheck() {
         List<Eur> eurRepositoryAll = eurRepository.findAll();
 
