@@ -115,6 +115,10 @@
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
+                        <configuration>
+                            <!-- Если отключены тесты, то мы не поднимаем контекст, чтобы проходил билд на heroku -->
+                            <skip>${skipTests}</skip>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>pre-integration-test</id>
