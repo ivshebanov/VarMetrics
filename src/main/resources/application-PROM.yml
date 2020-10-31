@@ -3,10 +3,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://ec2-54-75-229-28.eu-west-1.compute.amazonaws.com:5432/d3o94hdp43dhv8
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost/varmetrics}
     driverClassName: org.postgresql.Driver
-    username: gugwyciqjvickr
-    password: 179785984c5c1791226a5121df56c58ac52b200af87db544eab825f87f843b2e
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:12345}
   liquibase:
     enabled: true
     change-log: classpath:/migration/0001_changelog.xml
