@@ -11,7 +11,7 @@ public class CurrencyFromYandexTest {
 
     private final Currency currency = new CurrencyFromYandex();
 
-//    @Test
+    @Test
     public void getUsdTest() throws IOException {
 
         double usd = currency.getUsd();
@@ -19,7 +19,7 @@ public class CurrencyFromYandexTest {
         Assert.assertTrue(usd != 0);
     }
 
-//    @Test
+    @Test
     public void getEurTest() throws IOException {
 
         double eur = currency.getEur();

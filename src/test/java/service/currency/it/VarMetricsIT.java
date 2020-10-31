@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.given;
 
 public class VarMetricsIT {
 
-//    @Test
+    @Test
     public void usdAllTest() {
         List<Usd> usds = sendRequest("/usd", Usd.class);
 
@@ -22,7 +22,7 @@ public class VarMetricsIT {
         Assert.assertTrue(usds.get(0).getCourse() != 0);
     }
 
-//    @Test
+    @Test
     public void eurAllTest() {
         List<Eur> eurs = sendRequest("/eur", Eur.class);
 
