@@ -22,6 +22,7 @@
         <junit.version>4.13</junit.version>
         <liquibase-core.version>3.5.1</liquibase-core.version>
         <rest-assured.version>3.3.0</rest-assured.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     </properties>
 
     <parent>
@@ -97,11 +98,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <release>${java.version}</release>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
+                <version>${maven-compiler-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
