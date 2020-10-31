@@ -22,8 +22,6 @@
         <junit.version>4.13</junit.version>
         <liquibase-core.version>3.5.1</liquibase-core.version>
         <rest-assured.version>3.3.0</rest-assured.version>
-        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <webapp-runner.version>8.0.30.2</webapp-runner.version>
     </properties>
 
     <parent>
@@ -95,29 +93,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot-starter.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>${maven-dependency-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.github.jsimone</groupId>
-                                    <artifactId>webapp-runner</artifactId>
-                                    <version>${webapp-runner.version}</version>
-                                    <destFileName>webapp-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
