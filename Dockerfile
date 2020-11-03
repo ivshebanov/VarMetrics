@@ -5,7 +5,7 @@ RUN mkdir -p /usr/src/varmetrics
 WORKDIR /usr/src/varmetrics
 COPY . /usr/src/varmetrics
 
-ENTRYPOINT ["/usr/src/varmetrics", "-Dspring.profiles.active=PROM", "-jar", "varmetrics.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=PROM", "-jar", "/usr/src/varmetrics/varmetrics.jar"]
 CMD ["java", "Application"]
 
 MAINTAINER Ilya Shebanov <Shebanov@gmail.com>
