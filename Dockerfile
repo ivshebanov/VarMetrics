@@ -3,7 +3,7 @@ EXPOSE 8080
 
 RUN mkdir -p /usr/src/varmetrics
 WORKDIR /usr/src/varmetrics
-COPY target/varmetrics.jar /usr/src/varmetrics/varmetrics.jar
+COPY varmetrics.jar /usr/src/varmetrics/varmetrics.jar
 
 ENTRYPOINT ["java", "-Dspring.profiles.active=PROM", "-jar", "/usr/src/varmetrics/varmetrics.jar"]
 CMD ["java", "Application"]
