@@ -1,3 +1,4 @@
+#сборка
 FROM maven
 WORKDIR /usr/src/varmetrics
 COPY pom.xml .
@@ -7,9 +8,11 @@ COPY . .
 FROM openjdk:11-jdk-slim
 EXPOSE 8080
 
-COPY --from=0 /usr/src/varmetrics/target/*.jar ./
+COPY --from=0 /usr/src/varmetrics/target/varmetrics.jar ./
 
-ENTRYPOINT ["java", "-Dspring.profiles.active=PROM", "-jar", "varmetrics.jar"]
+#запуск
+ENTRYPOINT ["java", "-Dspring.profiles.active=DEV", "-jar", "varmetrics.jar"]
 CMD ["java", "Application"]
+RUN java -Dspring.profiles.active=DEV -jar varmetrics.jar
 
 MAINTAINER Ilya Shebanov <Shebanov@gmail.com>
