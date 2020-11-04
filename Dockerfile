@@ -2,7 +2,7 @@ FROM openjdk:11-jdk-slim
 EXPOSE 8080
 
 WORKDIR /usr/src/varmetrics
-COPY target/varmetrics.jar .
+COPY varmetrics.jar .
 
 ENTRYPOINT ["java", "-Dspring.profiles.active=PROM", "-jar", "varmetrics.jar"]
 CMD ["java", "Application"]
