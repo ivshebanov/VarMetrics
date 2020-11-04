@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-alpine
+FROM openjdk:11-jdk-slim
 EXPOSE 8080
 
 ARG DEPENDENCY=target/dependency
