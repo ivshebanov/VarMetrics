@@ -1,12 +1,15 @@
+FROM maven
+WORKDIR /usr/src/varmetrics
+COPY pom.xml .
+RUN mvn clean install -DskipTests
+COPY . .
+
 FROM openjdk:11-jdk-slim
 EXPOSE 8080
 
-ARG DEPENDENCY=target/dependency
-COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY ${DEPENDENCY}/META-INF /app/META-INF
-COPY ${DEPENDENCY}/BOOT-INF/classes /app
+COPY --from=0 /usr/src/app/target/*.jar ./
 
-ENTRYPOINT ["java", "-Dspring.profiles.active=DEV", "-cp","dependency:dependency/lib/*", "/varmetrics.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=PROM", "-jar", "varmetrics.jar"]
 CMD ["java", "Application"]
 
 MAINTAINER Ilya Shebanov <Shebanov@gmail.com>
