@@ -7,7 +7,7 @@ COPY . .
 FROM openjdk:11-jdk-slim
 EXPOSE 8080
 
-COPY --from=0 /usr/src/app/target/*.jar ./
+COPY --from=0 /usr/src/varmetrics/target/*.jar ./
 
 ENTRYPOINT ["java", "-Dspring.profiles.active=PROM", "-jar", "varmetrics.jar"]
 CMD ["java", "Application"]
