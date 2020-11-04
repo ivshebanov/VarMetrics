@@ -1,12 +1,12 @@
-FROM openjdk:11-jdk-slim
+FROM openjdk:11-jdk-alpine
 EXPOSE 8080
 
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} varmetrics.jar
+ARG DEPENDENCY=target/dependency
+COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY ${DEPENDENCY}/META-INF /app/META-INF
+COPY ${DEPENDENCY}/BOOT-INF/classes /app
 
-ENTRYPOINT ["java", "-Dspring.profiles.active=DEV", "-jar", "/varmetrics.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=DEV", "-cp","dependency:dependency/lib/*", "/varmetrics.jar"]
 CMD ["java", "Application"]
 
 MAINTAINER Ilya Shebanov <Shebanov@gmail.com>
