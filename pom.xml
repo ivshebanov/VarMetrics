@@ -22,6 +22,7 @@
         <liquibase-core.version>3.5.1</liquibase-core.version>
         <rest-assured.version>3.3.0</rest-assured.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
     </properties>
 
     <parent>
@@ -94,11 +95,20 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot-starter.version}</version>
+                <configuration>
+                    <finalName>varmetrics</finalName>
+                    <mainClass>com.varmetrics.Application</mainClass>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
