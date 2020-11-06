@@ -1,13 +1,10 @@
 #сборка
 FROM maven
-COPY pom.xml .
-RUN mvn clean install -DskipTests
-COPY . .
+RUN mvn clean install
 
 FROM openjdk:11-jdk-slim
 
 WORKDIR /usr/src/varmetrics
-
 COPY target/varmetrics.jar ./
 COPY entry_point.sh /docker-entrypoint.sh
 
