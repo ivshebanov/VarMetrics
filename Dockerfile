@@ -1,6 +1,8 @@
 #сборка
 FROM maven
+COPY pom.xml .
 RUN mvn clean install
+COPY . .
 
 FROM openjdk:11-jdk-slim
 
