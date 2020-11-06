@@ -8,7 +8,7 @@ COPY . .
 FROM openjdk:11-jdk-slim
 
 
-COPY /usr/src/varmetrics/target/varmetrics.jar ./
+COPY --from=0 /usr/src/varmetrics/target/varmetrics.jar .
 COPY entry_point.sh ./docker-entrypoint.sh
 
 RUN chmod +x /docker-entrypoint.sh
