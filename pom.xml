@@ -94,6 +94,10 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot-starter.version}</version>
+                <configuration>
+                    <finalName>varmetrics</finalName>
+                    <mainClass>com.varmetrics.Application</mainClass>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
