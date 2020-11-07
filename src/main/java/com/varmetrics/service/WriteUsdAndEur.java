@@ -52,12 +52,12 @@ public class WriteUsdAndEur {
 
     private void saveUsd() throws IOException {
 
-        usdRepository.save(new Usd(ZonedDateTime.now(ZoneId.of("Europe/Moscow")), currency.getUsd()));
+        usdRepository.save(new Usd(ZonedDateTime.now(ZoneId.of("Europe/Paris")), currency.getUsd()));
     }
 
     private void saveEur() throws IOException {
 
-        eurRepository.save(new Eur(ZonedDateTime.now(ZoneId.of("Europe/Moscow")), currency.getEur()));
+        eurRepository.save(new Eur(ZonedDateTime.now(ZoneId.of("Europe/Paris")), currency.getEur()));
     }
 
     public String interrupt() {
