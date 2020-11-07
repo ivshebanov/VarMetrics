@@ -29,7 +29,7 @@ public class WriteUsdAndEur {
         this.usdRepository = usdRepository;
         this.eurRepository = eurRepository;
         this.currency = currency;
-//        runWrite();
+        runWrite();
     }
 
     public void runWrite() {
