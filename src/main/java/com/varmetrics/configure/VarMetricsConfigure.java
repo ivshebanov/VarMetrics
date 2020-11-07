@@ -8,15 +8,15 @@ import com.varmetrics.service.сurrency.CurrencyFromYandex;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 public class VarMetricsConfigure {
 
-//    @Bean
+    @Bean
     public WriteUsdAndEur writeUsdAndEur(UsdRepository usdRepository, EurRepository eurRepository, Currency currency) {
         return new WriteUsdAndEur(usdRepository, eurRepository, currency);
     }
 
-//    @Bean
+    @Bean
     public Currency currencyFromYandex() {
         return new CurrencyFromYandex();
     }

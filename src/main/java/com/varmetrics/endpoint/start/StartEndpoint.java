@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//@RestController
-//@RequestMapping("/start")
+@RestController
+@RequestMapping("/start")
 public class StartEndpoint {
 
     private final WriteUsdAndEur writeUsdAndEur;
 
-//    @Autowired
+    @Autowired
     public StartEndpoint(WriteUsdAndEur writeUsdAndEur) {
         this.writeUsdAndEur = writeUsdAndEur;
     }
