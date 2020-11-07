@@ -29,12 +29,12 @@ public class WriteUsdAndEur {
         this.usdRepository = usdRepository;
         this.eurRepository = eurRepository;
         this.currency = currency;
-//        runWrite();
+        runWrite();
     }
 
     public void runWrite() {
 
-//        Executors.newSingleThreadExecutor(new DaemonThreadFactory()).execute(() -> {
+        Executors.newSingleThreadExecutor(new DaemonThreadFactory()).execute(() -> {
 
             while (interrupt) {
                 try {
@@ -46,7 +46,7 @@ public class WriteUsdAndEur {
                 }
             }
 
-//        });
+        });
     }
 
     private void saveUsd() throws IOException {
