@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dspring.profiles.active=PROM -Dloader.main=com.varmetrics.Application -jar ./target/varmetrics.jar
+web: java $JAVA_OPTS -Dspring.profiles.active=PROM -jar ./target/varmetrics.jar
