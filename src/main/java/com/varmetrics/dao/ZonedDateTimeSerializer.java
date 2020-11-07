@@ -13,6 +13,6 @@ public class ZonedDateTimeSerializer extends JsonSerializer<ZonedDateTime> {
 
     @Override
     public void serialize(ZonedDateTime zonedDateTime, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeString(zonedDateTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME.localizedBy(Locale.getDefault())));
+        jsonGenerator.writeString(zonedDateTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
     }
 }

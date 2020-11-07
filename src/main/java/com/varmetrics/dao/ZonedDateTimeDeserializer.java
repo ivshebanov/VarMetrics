@@ -13,6 +13,6 @@ public class ZonedDateTimeDeserializer extends JsonDeserializer<ZonedDateTime> {
 
     @Override
     public ZonedDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        return ZonedDateTime.parse(jsonParser.getText(), DateTimeFormatter.ISO_ZONED_DATE_TIME.localizedBy(Locale.getDefault()));
+        return ZonedDateTime.parse(jsonParser.getText(), DateTimeFormatter.ISO_ZONED_DATE_TIME);
     }
 }
