@@ -20,6 +20,10 @@ mvn clean install -DskipTests -DskipITs
 mvn clean install -DskipITs
 ```
 
+Сборка heroku
+```
+mvn -DskipTests clean dependency:list install
+```
 
 ### Запуск
 Запуск DEV профиля с поднятием h2
