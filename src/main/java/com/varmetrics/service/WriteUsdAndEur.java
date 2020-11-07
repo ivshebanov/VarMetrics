@@ -10,7 +10,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.TimeZone;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
@@ -51,12 +53,12 @@ public class WriteUsdAndEur {
 
     private void saveUsd() throws IOException {
 
-        usdRepository.save(new Usd(ZonedDateTime.now(), currency.getUsd()));
+        usdRepository.save(new Usd(ZonedDateTime.now(ZoneId.of("Europe/Moscow")), currency.getUsd()));
     }
 
     private void saveEur() throws IOException {
 
-        eurRepository.save(new Eur(ZonedDateTime.now(), currency.getEur()));
+        eurRepository.save(new Eur(ZonedDateTime.now(ZoneId.of("Europe/Moscow")), currency.getEur()));
     }
 
     public String interrupt() {
