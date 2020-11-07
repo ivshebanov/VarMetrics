@@ -7,11 +7,12 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class ZonedDateTimeDeserializer extends JsonDeserializer<ZonedDateTime> {
 
     @Override
     public ZonedDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        return ZonedDateTime.parse(jsonParser.getText(), DateTimeFormatter.ISO_ZONED_DATE_TIME);
+        return ZonedDateTime.parse(jsonParser.getText(), DateTimeFormatter.ISO_ZONED_DATE_TIME.localizedBy(Locale.getDefault()));
     }
 }
