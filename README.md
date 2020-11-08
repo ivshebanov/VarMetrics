@@ -5,22 +5,22 @@
 
 ### Сборка 
 
-Сборка проекта со всеми тестами
+Сборка проекта со всеми тестами. Профиль run.it отвечает за интеграционные тесты
+```
+mvn clean install -P run.it
+```
+
+Сборка проекта без интеграционных тестов
 ```
 mvn clean install
 ```
 
-Сборка проекта без всех тестов, сейчас "-DskipTests" отключит все тесты
+Сборка проекта без всех тестов
 ```
-mvn clean install -DskipTests -DskipITs
-```
-
-Сборка проекта без интеграционных тестов. Профиль run.it отвечает за интеграционные тесты
-```
-mvn clean install -DskipITs
+mvn clean install -DskipTests
 ```
 
-Сборка heroku
+Сборка на heroku
 ```
 mvn -DskipTests clean dependency:list install
 ```
@@ -34,7 +34,11 @@ mvn clean install spring-boot:run -Dspring.profiles.active=DEV
 Запуск PROM профиля, требует развернутой базы pg
 ```
 mvn clean install spring-boot:run -Dspring.profiles.active=PROM
-java -Dspring.profiles.active=PROM $JAVA_OPTS -jar target/*.war
+```
+
+Запуск на heroku
+```
+java $JAVA_OPTS -Dspring.profiles.active=PROM -jar ./target/varmetrics.jar
 ```
 
 ### Возможные проблемы при работе с проектом
