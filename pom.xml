@@ -116,22 +116,13 @@
         <profile>
             <id>run.it</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
-                        <version>${spring-boot-starter.version}</version>
-                        <configuration>
-                            <!-- Если отключены тесты, то мы не поднимаем контекст, чтобы проходил билд на heroku -->
-                            <skip>${skipTests}</skip>
-                            <profiles>
-                                <profile>DEV</profile>
-                            </profiles>
-                            <fork>true</fork>
-                        </configuration>
                         <executions>
                             <execution>
                                 <id>pre-integration-test</id>
@@ -139,6 +130,12 @@
                                 <goals>
                                     <goal>start</goal>
                                 </goals>
+                                <configuration>
+                                    <profiles>
+                                        <profile>DEV</profile>
+                                    </profiles>
+                                    <fork>true</fork>
+                                </configuration>
                             </execution>
                             <execution>
                                 <id>post-integration-test</id>
