@@ -38,7 +38,7 @@ mvn clean install spring-boot:run -Dspring.profiles.active=PROM
 
 Запуск на heroku
 ```
-java $JAVA_OPTS -Dspring.profiles.active=PROM -jar ./target/varmetrics.jar
+java $JAVA_OPTS -DskipTests -Dspring.profiles.active=PROM -jar ./target/varmetrics.jar
 ```
 
 ### Возможные проблемы при работе с проектом
