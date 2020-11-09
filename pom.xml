@@ -123,9 +123,14 @@
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${spring-boot-starter.version}</version>
                         <configuration>
                             <!-- Если отключены тесты, то мы не поднимаем контекст, чтобы проходил билд на heroku -->
-                            <skip>${skipITs}</skip>
+                            <skip>${skipTests}</skip>
+                            <profiles>
+                                <profile>DEV</profile>
+                            </profiles>
+                            <fork>true</fork>
                         </configuration>
                         <executions>
                             <execution>
@@ -134,20 +139,6 @@
                                 <goals>
                                     <goal>start</goal>
                                 </goals>
-                                <configuration>
-                                    <profiles>
-                                        <profile>DEV</profile>
-                                    </profiles>
-                                    <fork>true</fork>
-                                    <systemPropertyVariables>
-                                        <healthcheck.offline>true</healthcheck.offline>
-                                        <ru.sbrf.ufs.platform.envmode.dev>true</ru.sbrf.ufs.platform.envmode.dev>
-                                    </systemPropertyVariables>
-                                    <environmentVariables>
-                                        <STAND_TYPE>DEV</STAND_TYPE>
-                                    </environmentVariables>
-                                    <jvmArguments>--illegal-access=warn</jvmArguments>
-                                </configuration>
                             </execution>
                             <execution>
                                 <id>post-integration-test</id>

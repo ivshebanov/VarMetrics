@@ -10,11 +10,6 @@
 mvn clean install
 ```
 
-Сборка проекта без интеграционных тестов
-```
-mvn clean install -DskipITs
-```
-
 Сборка проекта без тестов
 ```
 mvn clean install -DskipTests
