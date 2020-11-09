@@ -21,7 +21,7 @@
         <h2.version>1.4.200</h2.version>
         <postgresql.version>42.2.9</postgresql.version>
         <junit.version>4.13</junit.version>
-        <liquibase-core.version>3.5.1</liquibase-core.version>
+        <liquibase-core.version>3.6.3</liquibase-core.version>
         <rest-assured.version>3.3.0</rest-assured.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
@@ -44,11 +44,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring-boot-starter.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
-<!--            <version>${spring-boot-starter.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${spring-boot-starter.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -84,7 +84,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <!--            <version>${liquibase-core.version}</version>-->
+            <version>${liquibase-core.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -123,10 +123,6 @@
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
-                        <configuration>
-                            <!-- Если отключены тесты, то мы не поднимаем контекст, чтобы проходил билд на heroku -->
-                            <skip>${skipITs}</skip>
-                        </configuration>
                         <executions>
                             <execution>
                                 <id>pre-integration-test</id>
@@ -139,14 +135,6 @@
                                         <profile>DEV</profile>
                                     </profiles>
                                     <fork>true</fork>
-                                    <systemPropertyVariables>
-                                        <healthcheck.offline>true</healthcheck.offline>
-                                        <ru.sbrf.ufs.platform.envmode.dev>true</ru.sbrf.ufs.platform.envmode.dev>
-                                    </systemPropertyVariables>
-                                    <environmentVariables>
-                                        <STAND_TYPE>DEV</STAND_TYPE>
-                                    </environmentVariables>
-                                    <jvmArguments>--illegal-access=warn</jvmArguments>
                                 </configuration>
                             </execution>
                             <execution>
