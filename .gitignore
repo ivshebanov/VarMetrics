@@ -127,3 +127,5 @@ Temporary Items
 .apdisk
 
 # Folder config file
+package-lock.json
+src/main/resources/static/js
