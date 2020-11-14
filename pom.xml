@@ -121,7 +121,7 @@
                 <executions>
                     <execution>
                         <id>run-npm</id>
-                        <phase>prepare-package</phase>
+                        <phase>post-clean</phase>
                         <goals>
                             <goal>install</goal>
                             <goal>build</goal>
