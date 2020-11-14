@@ -15,6 +15,18 @@
         <start-class>com.varmetrics.Application</start-class>
         <h2.url>jdbc:h2:mem:DbVarMetrics;DB_CLOSE_DELAY=-1\;RUNSCRIPT FROM 'classpath:h2/h2-ddl.sql';</h2.url>
 
+        <!-- Plugin configuration -->
+        <frontend-maven-plugin.node.version>v13.7.0</frontend-maven-plugin.node.version>
+        <frontend-maven-plugin.npm.version>6.14.8</frontend-maven-plugin.npm.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
+        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
+        <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
+
+
         <spring-boot-starter.version>2.1.4.RELEASE</spring-boot-starter.version>
         <lombok.version>1.18.10</lombok.version>
         <jsoup.version>1.11.3</jsoup.version>
@@ -23,13 +35,6 @@
         <junit.version>4.13</junit.version>
         <liquibase-core.version>3.6.3</liquibase-core.version>
         <rest-assured.version>3.3.0</rest-assured.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
-        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
-        <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
     </properties>
 
     <parent>
@@ -115,17 +120,54 @@
             </plugin>
 
             <plugin>
-                <groupId>com.github.mjeanroy</groupId>
-                <artifactId>node-maven-plugin</artifactId>
-                <version>0.2.0</version>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.10.3</version>
                 <executions>
+                    <!-- Загружаем nodejs и npm во временную директорию-->
                     <execution>
-                        <id>run-npm</id>
-                        <phase>pre-clean</phase>
+                        <id>install node and npm</id>
+                        <phase>generate-resources</phase>
+
                         <goals>
-                            <goal>install</goal>
-                            <goal>build</goal>
+                            <goal>install-node-and-npm</goal>
                         </goals>
+
+                        <configuration>
+                            <installDirectory>${project.build.directory}</installDirectory>
+                            <nodeVersion>${frontend-maven-plugin.node.version}</nodeVersion>
+                            <npmVersion>${frontend-maven-plugin.npm.version}</npmVersion>
+                        </configuration>
+                    </execution>
+
+                    <!-- Загружаем зависимости -->
+                    <execution>
+                        <id>npm install</id>
+                        <phase>generate-resources</phase>
+
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+
+                        <configuration>
+                            <arguments>install</arguments>
+                            <installDirectory>${project.build.directory}</installDirectory>
+                        </configuration>
+                    </execution>
+
+                    <!-- Запускаем webpack.prod.js -->
+                    <execution>
+                        <id>npm run build</id>
+                        <phase>generate-resources</phase>
+
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+
+                        <configuration>
+                            <arguments>run-script build</arguments>
+                            <installDirectory>${project.build.directory}</installDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

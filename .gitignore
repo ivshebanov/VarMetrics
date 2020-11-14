@@ -128,4 +128,6 @@ Temporary Items
 
 # Folder config file
 package-lock.json
-src/main/resources/static/js
+src/main/resources/static/
+node
+node_modules
