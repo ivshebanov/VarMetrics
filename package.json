@@ -4,6 +4,7 @@
   "description": "[Сайт VarMetrics](https://varmetrics.herokuapp.com/)",
   "main": "index.js",
   "scripts": {
+    "clean": "gulp clean",
     "start": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
   },

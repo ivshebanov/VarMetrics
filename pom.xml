@@ -118,16 +118,20 @@
                 <groupId>com.github.mjeanroy</groupId>
                 <artifactId>node-maven-plugin</artifactId>
                 <version>0.2.0</version>
-                <executions>
-                    <execution>
-                        <id>run-npm</id>
-                        <phase>post-clean</phase>
-                        <goals>
-                            <goal>install</goal>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <extensions>true</extensions>
+                <configuration>
+                    <failOnMissingScript>false</failOnMissingScript>
+                </configuration>
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>run-npm</id>-->
+<!--                        <phase>post-clean</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>install</goal>-->
+<!--                            <goal>build</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
             </plugin>
         </plugins>
     </build>
