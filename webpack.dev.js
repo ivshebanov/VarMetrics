@@ -7,7 +7,7 @@ module.exports = merge(common, {
     devServer: {
         contentBase: './dist',
         compress: true,
-        port: 8006,
+        port: 8000,
         allowedHosts: [
             'localhost:8080'
         ],
