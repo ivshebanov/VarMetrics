@@ -123,6 +123,7 @@
                         <id>run-npm</id>
                         <phase>prepare-package</phase>
                         <goals>
+                            <goal>install</goal>
                             <goal>build</goal>
                         </goals>
                     </execution>
