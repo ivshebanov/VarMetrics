@@ -1,18 +1,16 @@
 <template>
-  <div align="center">
-    <table border="1">
-      <td>
-        <message-row v-for="usd in usdList" :key="usd.id" :val="usd"/>
-      </td>
-      <td>
-        <message-row v-for="eur in eurList" :key="eur.id" :val="eur"/>
-      </td>
-    </table>
-  </div>
+  <v-layout column>
+    <v-container>
+      <v-row>
+        <message-row :list="usdList"/>
+        <message-row :list="eurList"/>
+      </v-row>
+    </v-container>
+  </v-layout>
 </template>
 
 <script>
-import MessageRow from 'MessageRow.vue'
+import MessageRow from './CourseTable.vue'
 
 export default {
   props: ['usdList', 'eurList'],
