@@ -2,8 +2,8 @@ package com.varmetrics.dao.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.varmetrics.dao.ZonedDateTimeDeserializer;
-import com.varmetrics.dao.ZonedDateTimeSerializer;
+import com.varmetrics.dao.dateFormat.ZonedDateTimeDeserializer;
+import com.varmetrics.dao.dateFormat.ZonedDateTimeSerializer;
 import lombok.Data;
 
 import javax.persistence.Entity;

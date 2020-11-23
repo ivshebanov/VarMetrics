@@ -1,4 +1,4 @@
-package com.varmetrics.dao;
+package com.varmetrics.dao.dateFormat;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -11,8 +11,10 @@ import java.util.Locale;
 
 public class ZonedDateTimeSerializer extends JsonSerializer<ZonedDateTime> {
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS Z");
+
     @Override
     public void serialize(ZonedDateTime zonedDateTime, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeString(zonedDateTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
+        jsonGenerator.writeString(zonedDateTime.format(DATE_TIME_FORMATTER));
     }
 }
