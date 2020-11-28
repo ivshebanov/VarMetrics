@@ -15,26 +15,22 @@
         <start-class>com.varmetrics.Application</start-class>
         <h2.url>jdbc:h2:mem:DbVarMetrics;DB_CLOSE_DELAY=-1\;RUNSCRIPT FROM 'classpath:h2/h2-ddl.sql';</h2.url>
 
+        <!-- Main configuration -->
+        <spring-boot-starter.version>2.3.5.RELEASE</spring-boot-starter.version>
+        <lombok.version>1.18.16</lombok.version>
+        <jsoup.version>1.13.1</jsoup.version>
+        <postgresql.version>42.2.18</postgresql.version>
+        <liquibase-core.version>4.2.0</liquibase-core.version>
+
+        <!-- Tests configuration -->
+        <h2.version>1.4.200</h2.version>
+        <rest-assured.version>4.2.0</rest-assured.version>
+        <junit.version>4.13.1</junit.version>
+
         <!-- Plugin configuration -->
+        <frontend-maven-plugin.version>1.10.3</frontend-maven-plugin.version>
         <frontend-maven-plugin.node.version>v13.7.0</frontend-maven-plugin.node.version>
         <frontend-maven-plugin.npm.version>6.14.8</frontend-maven-plugin.npm.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
-        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
-        <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
-
-
-        <spring-boot-starter.version>2.3.5.RELEASE</spring-boot-starter.version>
-        <lombok.version>1.18.10</lombok.version>
-        <jsoup.version>1.11.3</jsoup.version>
-        <h2.version>1.4.200</h2.version>
-        <postgresql.version>42.2.9</postgresql.version>
-        <junit.version>4.13.1</junit.version>
-        <liquibase-core.version>3.6.3</liquibase-core.version>
-        <rest-assured.version>3.3.0</rest-assured.version>
     </properties>
 
     <parent>
@@ -122,7 +118,7 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.10.3</version>
+                <version>${frontend-maven-plugin.version}</version>
                 <executions>
                     <!-- Загружаем nodejs и npm во временную директорию-->
                     <execution>
