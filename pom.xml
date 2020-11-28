@@ -6,7 +6,7 @@
 
     <groupId>com.varmetrics</groupId>
     <artifactId>varmetrics</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.1.0.RELEASE</version>
     <packaging>jar</packaging>
     <name>varmetrics</name>
 
@@ -15,14 +15,9 @@
         <start-class>com.varmetrics.Application</start-class>
         <h2.url>jdbc:h2:mem:DbVarMetrics;DB_CLOSE_DELAY=-1\;RUNSCRIPT FROM 'classpath:h2/h2-ddl.sql';</h2.url>
 
-        <spring-boot-starter.version>2.1.4.RELEASE</spring-boot-starter.version>
-        <lombok.version>1.18.10</lombok.version>
-        <jsoup.version>1.11.3</jsoup.version>
-        <h2.version>1.4.200</h2.version>
-        <postgresql.version>42.2.9</postgresql.version>
-        <junit.version>4.13</junit.version>
-        <liquibase-core.version>3.5.1</liquibase-core.version>
-        <rest-assured.version>3.3.0</rest-assured.version>
+        <!-- Plugin configuration -->
+        <frontend-maven-plugin.node.version>v13.7.0</frontend-maven-plugin.node.version>
+        <frontend-maven-plugin.npm.version>6.14.8</frontend-maven-plugin.npm.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
@@ -30,6 +25,16 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
         <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
+
+
+        <spring-boot-starter.version>2.1.4.RELEASE</spring-boot-starter.version>
+        <lombok.version>1.18.10</lombok.version>
+        <jsoup.version>1.11.3</jsoup.version>
+        <h2.version>1.4.200</h2.version>
+        <postgresql.version>42.2.9</postgresql.version>
+        <junit.version>4.13</junit.version>
+        <liquibase-core.version>3.6.3</liquibase-core.version>
+        <rest-assured.version>3.3.0</rest-assured.version>
     </properties>
 
     <parent>
@@ -44,11 +49,16 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring-boot-starter.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
-<!--            <version>${spring-boot-starter.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>${spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${spring-boot-starter.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -84,7 +94,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <!--            <version>${liquibase-core.version}</version>-->
+            <version>${liquibase-core.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -108,77 +118,118 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot-starter.version}</version>
             </plugin>
+
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.10.3</version>
+                <executions>
+                    <!-- Загружаем nodejs и npm во временную директорию-->
+                    <execution>
+                        <id>install node and npm</id>
+                        <phase>generate-resources</phase>
+
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+
+                        <configuration>
+                            <installDirectory>${project.build.directory}</installDirectory>
+                            <nodeVersion>${frontend-maven-plugin.node.version}</nodeVersion>
+                            <npmVersion>${frontend-maven-plugin.npm.version}</npmVersion>
+                        </configuration>
+                    </execution>
+
+                    <!-- Загружаем зависимости -->
+                    <execution>
+                        <id>npm install</id>
+                        <phase>generate-resources</phase>
+
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+
+                        <configuration>
+                            <arguments>install</arguments>
+                            <installDirectory>${project.build.directory}</installDirectory>
+                        </configuration>
+                    </execution>
+
+                    <!-- Запускаем webpack.prod.js -->
+                    <execution>
+                        <id>npm run build</id>
+                        <phase>generate-resources</phase>
+
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+
+                        <configuration>
+                            <arguments>run-script build</arguments>
+                            <installDirectory>${project.build.directory}</installDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
-<!--    <profiles>-->
-<!--        &lt;!&ndash; Запуск окружения для прогона интеграционных тестов &ndash;&gt;-->
-<!--        <profile>-->
-<!--            <id>run.it</id>-->
-<!--            <activation>-->
-<!--                <activeByDefault>true</activeByDefault>-->
-<!--            </activation>-->
-<!--            <build>-->
-<!--                <plugins>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.springframework.boot</groupId>-->
-<!--                        <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                        <configuration>-->
-<!--                            &lt;!&ndash; Если отключены тесты, то мы не поднимаем контекст, чтобы проходил билд на heroku &ndash;&gt;-->
-<!--                            <skip>${skipTests}</skip>-->
-<!--                        </configuration>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <id>pre-integration-test</id>-->
-<!--                                <phase>pre-integration-test</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>start</goal>-->
-<!--                                </goals>-->
-<!--                                <configuration>-->
-<!--                                    <profiles>-->
-<!--                                        <profile>DEV</profile>-->
-<!--                                    </profiles>-->
-<!--                                    <fork>true</fork>-->
-<!--                                    <systemPropertyVariables>-->
-<!--                                        <healthcheck.offline>true</healthcheck.offline>-->
-<!--                                        <ru.sbrf.ufs.platform.envmode.dev>true</ru.sbrf.ufs.platform.envmode.dev>-->
-<!--                                    </systemPropertyVariables>-->
-<!--                                    <environmentVariables>-->
-<!--                                        <STAND_TYPE>DEV</STAND_TYPE>-->
-<!--                                    </environmentVariables>-->
-<!--                                    <jvmArguments>&#45;&#45;illegal-access=warn</jvmArguments>-->
-<!--                                </configuration>-->
-<!--                            </execution>-->
-<!--                            <execution>-->
-<!--                                <id>post-integration-test</id>-->
-<!--                                <phase>post-integration-test</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>stop</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                    </plugin>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-failsafe-plugin</artifactId>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <goals>-->
-<!--                                    <goal>integration-test</goal>-->
-<!--                                    <goal>verify</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                        <configuration>-->
-<!--                            <enableAssertions>true</enableAssertions>-->
-<!--                            <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>-->
-<!--                            <trimStackTrace>false</trimStackTrace>-->
-<!--                            &lt;!&ndash; Fix https://stackoverflow.com/a/52532095 &ndash;&gt;-->
-<!--                            <classesDirectory>${project.build.outputDirectory}</classesDirectory>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </profile>-->
-<!--    </profiles>-->
+    <profiles>
+        <!-- Запуск окружения для прогона интеграционных тестов -->
+        <profile>
+            <id>run.it</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                                <configuration>
+                                    <profiles>
+                                        <profile>DEV</profile>
+                                    </profiles>
+                                    <fork>true</fork>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <enableAssertions>true</enableAssertions>
+                            <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
+                            <trimStackTrace>false</trimStackTrace>
+                            <!-- Fix https://stackoverflow.com/a/52532095 -->
+                            <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
