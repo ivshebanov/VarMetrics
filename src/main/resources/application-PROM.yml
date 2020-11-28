@@ -1,0 +1,16 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost/varmetrics}
+    driverClassName: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:12345}
+  liquibase:
+    enabled: true
+    change-log: classpath:/migration/0001_changelog.xml
+  jpa:
+    properties:
+      hibernate:
+        default_schema: VAR_METRICS
