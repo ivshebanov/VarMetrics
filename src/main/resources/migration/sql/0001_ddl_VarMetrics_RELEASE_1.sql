@@ -23,3 +23,17 @@ CREATE TABLE VAR_METRICS.eur
     course DOUBLE precision NOT NULL,
     PRIMARY KEY (id)
 );
+
+-- changeset ivshebanov:ddl_initial_step_varmetrics#0005
+CREATE TABLE VAR_METRICS.job
+(
+    id          BIGINT                 NOT NULL,
+    title       CHARACTER VARYING(100) NOT NULL,
+    companyName CHARACTER VARYING(50)  NOT NULL,
+    salary      CHARACTER VARYING(50),
+    location    CHARACTER VARYING(50),
+    siteName    CHARACTER VARYING(50)  NOT NULL,
+    url         CHARACTER VARYING(100) NOT NULL,
+    date        TIMESTAMP              NOT NULL,
+    PRIMARY KEY (id)
+);
