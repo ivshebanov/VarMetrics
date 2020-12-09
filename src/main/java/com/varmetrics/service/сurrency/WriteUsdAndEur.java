@@ -1,10 +1,9 @@
-package com.varmetrics.service;
+package com.varmetrics.service.сurrency;
 
 import com.varmetrics.dao.model.Eur;
 import com.varmetrics.dao.model.Usd;
 import com.varmetrics.dao.repository.EurRepository;
 import com.varmetrics.dao.repository.UsdRepository;
-import com.varmetrics.service.сurrency.Currency;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.TimeZone;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;

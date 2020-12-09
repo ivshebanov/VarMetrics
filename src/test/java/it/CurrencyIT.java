@@ -1,4 +1,4 @@
-package service.currency.it;
+package it;
 
 import com.varmetrics.dao.model.Eur;
 import com.varmetrics.dao.model.Usd;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class VarMetricsIT {
+public class CurrencyIT {
 
     @Test
     public void usdAllTest() {

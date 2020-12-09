@@ -25,7 +25,7 @@ CREATE TABLE VAR_METRICS.eur
 );
 
 -- changeset ivshebanov:ddl_initial_step_varmetrics#0005
-CREATE TABLE VAR_METRICS.job
+CREATE TABLE VAR_METRICS.vacancy
 (
     id          BIGINT                 NOT NULL,
     title       CHARACTER VARYING(100) NOT NULL,
@@ -34,6 +34,7 @@ CREATE TABLE VAR_METRICS.job
     location    CHARACTER VARYING(50),
     siteName    CHARACTER VARYING(50)  NOT NULL,
     url         CHARACTER VARYING(100) NOT NULL,
+    dateVacancy CHARACTER VARYING(50),
     date        TIMESTAMP              NOT NULL,
     PRIMARY KEY (id)
 );
