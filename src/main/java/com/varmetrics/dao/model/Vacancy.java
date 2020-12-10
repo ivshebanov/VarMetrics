@@ -22,6 +22,7 @@ public class Vacancy {
     private Long id;
     private String title;
     private String companyName;
+    private String companyLogo;
     private String salary;
     private String location;
     private String siteName;

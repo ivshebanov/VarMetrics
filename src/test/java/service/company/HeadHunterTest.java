@@ -1,7 +1,6 @@
 package service.company;
 
 import com.varmetrics.dao.model.Vacancy;
-import com.varmetrics.service.company.Company;
 import com.varmetrics.service.company.HeadHunter;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +12,7 @@ public class HeadHunterTest {
     @Test
     public void getVacanciesTest() {
         // GIVEN
-        Company headHunter = new HeadHunter();
+        HeadHunter headHunter = new HeadHunter();
 
         // WHEN
         List<Vacancy> vacancies = headHunter.getVacancies("Java Москва");

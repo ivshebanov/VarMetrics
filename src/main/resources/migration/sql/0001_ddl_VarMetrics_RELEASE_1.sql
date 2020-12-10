@@ -30,6 +30,7 @@ CREATE TABLE VAR_METRICS.vacancy
     id          BIGINT                 NOT NULL,
     title       CHARACTER VARYING(100) NOT NULL,
     companyName CHARACTER VARYING(50)  NOT NULL,
+    companyLogo CHARACTER VARYING(100) NOT NULL,
     salary      CHARACTER VARYING(50),
     location    CHARACTER VARYING(50),
     siteName    CHARACTER VARYING(50)  NOT NULL,
