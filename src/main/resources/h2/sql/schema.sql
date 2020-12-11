@@ -12,14 +12,16 @@ CREATE TABLE eur
     course VARCHAR(20)            NOT NULL
 );
 
-CREATE TABLE job
+CREATE TABLE vacancy
 (
-    id          NUMBER(20) PRIMARY KEY NOT NULL,
-    title       VARCHAR(100)           NOT NULL,
-    companyName VARCHAR(50)            NOT NULL,
-    salary      VARCHAR(50),
-    location    VARCHAR(50),
-    siteName    VARCHAR(50)            NOT NULL,
-    url         VARCHAR(100)           NOT NULL,
-    date        TIMESTAMP(6)           NOT NULL
+    id           NUMBER(20) PRIMARY KEY NOT NULL,
+    title        VARCHAR(200)           NOT NULL,
+    company_name VARCHAR(200)            NOT NULL,
+    company_logo VARCHAR(200)           NOT NULL,
+    salary       VARCHAR(200),
+    location     VARCHAR(200),
+    site_name    VARCHAR(200)            NOT NULL,
+    url          VARCHAR(200)           NOT NULL,
+    date_vacancy VARCHAR(200)            NOT NULL,
+    date         TIMESTAMP(6)           NOT NULL
 );
