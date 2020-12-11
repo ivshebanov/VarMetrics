@@ -13,10 +13,12 @@ import CourseTable from "../components/tables/CourseTable.vue";
 
 export default {
   name: "UsdTab",
-  props: ['usdList'],
   components: {
     CourseTable
   },
+  data: () => ({
+    usdList: []
+  }),
   created: function () {
     this.$resource("/usd").get().then(result =>
         result.json().then(data =>
