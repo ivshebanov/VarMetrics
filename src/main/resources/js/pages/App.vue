@@ -16,10 +16,10 @@
       <v-tab-item v-for="item in items" :key="item">
         <v-card color="basil" flat height="100vh">
           <v-container v-if="item==='USD'">
-            <usd-tab :usd-list="usdList"/>
+            <usd-tab/>
           </v-container>
           <v-container v-if="item==='EUR'">
-            <eur-tab :eur-list="eurList"/>
+            <eur-tab/>
           </v-container>
         </v-card>
       </v-tab-item>
@@ -41,9 +41,7 @@ export default {
     tab: null,
     items: [
       'USD', 'EUR',
-    ],
-    usdList: [],
-    eurList: []
+    ]
   }),
 }
 </script>

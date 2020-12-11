@@ -13,10 +13,12 @@ import CourseTable from "../components/tables/CourseTable.vue";
 
 export default {
   name: "EurTab",
-  props: ['eurList'],
   components: {
     CourseTable
   },
+  data: () => ({
+    eurList: []
+  }),
   created: function () {
     this.$resource("/eur").get().then(result =>
         result.json().then(data =>
