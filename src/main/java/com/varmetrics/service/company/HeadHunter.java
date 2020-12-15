@@ -53,7 +53,7 @@ public class HeadHunter extends Company {
             }
             pageNumber++;
         }
-        logger.debug(VAR_METRICS_5.getText(), resultList);
+        logger.debug(VAR_METRICS_5.getText(), resultList.size());
         return resultList;
     }
 
