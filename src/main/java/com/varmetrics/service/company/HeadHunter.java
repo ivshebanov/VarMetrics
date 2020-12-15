@@ -45,7 +45,7 @@ public class HeadHunter extends Company {
 
             Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
             if (vacancies == null || vacancies.isEmpty()) break;
-            logger.debug(VAR_METRICS_4.getText(), vacancies.size());
+            logger.debug(VAR_METRICS_4.getText(), vacancies.size(), pageNumber);
             for (Element vacancyEl : vacancies) {
                 if (vacancyEl == null) break;
                 Vacancy vacancy = getVacancy(vacancyEl);

@@ -37,12 +37,6 @@ public class VacancyService {
     }
 
     public List<Vacancy> getAllVacancies() {
-        logger.trace("A TRACE Message");
-        logger.debug("A DEBUG Message");
-        logger.info("An INFO Message");
-        logger.warn("A WARN Message");
-        logger.error("An ERROR Message");
-
         try {
             return vacancyRepository.findAll();
         } catch (Exception ex) {
