@@ -1,12 +1,12 @@
 package com.varmetrics.service.company;
 
 import com.varmetrics.dao.model.Vacancy;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,10 +16,17 @@ import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_2;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_3;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_4;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_5;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_6;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_7;
+
 @Component
 public class HeadHunter extends Company {
 
-    private static final Logger logger = LogManager.getLogger(HeadHunter.class);
+    private static final Logger logger = LoggerFactory.getLogger(HeadHunter.class);
     private static final String URL_FORMAT = "http://hh.ru/search/vacancy?text=%s&page=%d";
     private static final String SITE_NAME = "hh.ru";
 
@@ -28,14 +35,17 @@ public class HeadHunter extends Company {
         List<Vacancy> resultList = new LinkedList<>();
         int pageNumber = 0;
         int pageLastNumber = getPageLastNumber(searchString);
+        logger.debug(VAR_METRICS_2.getText(), pageLastNumber);
 
         while (pageNumber != pageLastNumber) {
             String url = String.format(URL_FORMAT, replaceSpaceWithPlus(searchString), pageNumber);
+            logger.debug(VAR_METRICS_3.getText(), pageNumber, url);
             Document landingPage = getDocument(url);
             if (landingPage == null) break;
 
             Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
             if (vacancies == null || vacancies.isEmpty()) break;
+            logger.debug(VAR_METRICS_4.getText(), vacancies.size());
             for (Element vacancyEl : vacancies) {
                 if (vacancyEl == null) break;
                 Vacancy vacancy = getVacancy(vacancyEl);
@@ -43,6 +53,7 @@ public class HeadHunter extends Company {
             }
             pageNumber++;
         }
+        logger.debug(VAR_METRICS_5.getText(), resultList);
         return resultList;
     }
 
@@ -88,9 +99,9 @@ public class HeadHunter extends Company {
                     .timeout(20000)
                     .get();
         } catch (SocketTimeoutException e) {
-            logger.error(e.getMessage(), "Время ожидания истекло");
+            logger.error(e.getMessage(), VAR_METRICS_6.getText());
         } catch (IOException e) {
-            logger.error(e.getMessage(), "Не удалось получить страницу вакансий");
+            logger.error(e.getMessage(), VAR_METRICS_7.getText());
         }
         return null;
     }

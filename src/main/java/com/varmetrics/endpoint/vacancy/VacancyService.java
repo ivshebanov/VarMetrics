@@ -3,8 +3,8 @@ package com.varmetrics.endpoint.vacancy;
 import com.varmetrics.dao.model.Vacancy;
 import com.varmetrics.dao.repository.VacancyRepository;
 import com.varmetrics.service.company.Company;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_0;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_1;
+
 @Service
 public class VacancyService {
 
-    private static final Logger logger = LogManager.getLogger(VacancyService.class);
+    private static final Logger logger = LoggerFactory.getLogger(VacancyService.class);
 
     private final TransactionTemplate transactionTemplate;
     private final VacancyRepository vacancyRepository;
@@ -34,6 +37,12 @@ public class VacancyService {
     }
 
     public List<Vacancy> getAllVacancies() {
+        logger.trace("A TRACE Message");
+        logger.debug("A DEBUG Message");
+        logger.info("An INFO Message");
+        logger.warn("A WARN Message");
+        logger.error("An ERROR Message");
+
         try {
             return vacancyRepository.findAll();
         } catch (Exception ex) {
@@ -52,22 +61,20 @@ public class VacancyService {
 
     public synchronized List<Vacancy> scanAndGetAllVacancies(String searchString) {
         try {
-            return scanVacancies(searchString);
+            List<Vacancy> resultList = new LinkedList<>();
+            logger.info(VAR_METRICS_0.getText(), searchString);
+            companyList.forEach(company -> resultList.addAll(company.getVacancies(searchString)));
+
+            logger.debug(VAR_METRICS_1.getText(), resultList.size());
+            doInTransaction(() -> {
+                vacancyRepository.deleteAll();
+                vacancyRepository.saveAll(resultList);
+            });
+            return vacancyRepository.findAll();
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
         return new ArrayList<>();
-    }
-
-    private List<Vacancy> scanVacancies(String searchString) {
-        List<Vacancy> resultList = new LinkedList<>();
-        companyList.forEach(company -> resultList.addAll(company.getVacancies(searchString)));
-
-        doInTransaction(() -> {
-            vacancyRepository.deleteAll();
-            vacancyRepository.saveAll(resultList);
-        });
-        return vacancyRepository.findAll();
     }
 
     private void doInTransaction(CallWithoutResult callWithoutResult) {

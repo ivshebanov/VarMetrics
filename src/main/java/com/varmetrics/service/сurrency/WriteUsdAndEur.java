@@ -4,8 +4,8 @@ import com.varmetrics.dao.model.Eur;
 import com.varmetrics.dao.model.Usd;
 import com.varmetrics.dao.repository.EurRepository;
 import com.varmetrics.dao.repository.UsdRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class WriteUsdAndEur {
 
-    private static final Logger logger = LogManager.getLogger(WriteUsdAndEur.class);
+    private static final Logger logger = LoggerFactory.getLogger(WriteUsdAndEur.class);
 
     private final UsdRepository usdRepository;
     private final EurRepository eurRepository;
