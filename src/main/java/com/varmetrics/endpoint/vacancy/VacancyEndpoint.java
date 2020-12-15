@@ -24,6 +24,11 @@ public class VacancyEndpoint {
         return vacancyService.getAllVacancies();
     }
 
+    @GetMapping("/delete")
+    public void deleteAllVacancies() {
+        vacancyService.deleteAllVacancies();
+    }
+
     @GetMapping("/scan")
     public List<Vacancy> scanAndGetAllVacancies() {
         return vacancyService.scanAndGetAllVacancies("Java Москва");

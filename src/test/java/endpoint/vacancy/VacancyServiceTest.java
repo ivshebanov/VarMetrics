@@ -6,6 +6,7 @@ import com.varmetrics.endpoint.vacancy.VacancyService;
 import com.varmetrics.service.company.Company;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -29,7 +30,7 @@ public class VacancyServiceTest {
         Company company = mock(Company.class);
         when(company.getVacancies(searchString)).thenReturn(vacanciesExpect);
 
-        VacancyService vacancyService = new VacancyService(vacancyRepository, singletonList(company));
+        VacancyService vacancyService = new VacancyService(mock(TransactionTemplate.class), vacancyRepository, singletonList(company));
 
         // WHEN
         List<Vacancy> vacanciesResult = vacancyService.scanAndGetAllVacancies(searchString);
@@ -46,7 +47,7 @@ public class VacancyServiceTest {
         VacancyRepository vacancyRepository = mock(VacancyRepository.class);
         when(vacancyRepository.findAll()).thenReturn(vacanciesExpect);
         Company company = mock(Company.class);
-        VacancyService vacancyService = new VacancyService(vacancyRepository, singletonList(company));
+        VacancyService vacancyService = new VacancyService(mock(TransactionTemplate.class), vacancyRepository, singletonList(company));
 
         // WHEN
         List<Vacancy> vacanciesResult = vacancyService.getAllVacancies();
