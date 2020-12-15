@@ -7,8 +7,4 @@ spring:
             non_contextual_creation: true
 
 logging:
-  level:
-    org:
-      springframework:
-        web: DEBUG
-      hibernate: ERROR
+  config: classpath:log4j2.xml
