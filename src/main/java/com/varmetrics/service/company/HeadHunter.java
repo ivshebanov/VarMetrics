@@ -117,4 +117,9 @@ public class HeadHunter extends Company {
     private boolean isNull(Object obj) {
         return obj == null;
     }
+
+    @Override
+    public String toString() {
+        return "HeadHunter";
+    }
 }

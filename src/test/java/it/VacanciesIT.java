@@ -5,7 +5,6 @@ import io.restassured.http.ContentType;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -18,6 +17,11 @@ public class VacanciesIT {
 
         Assert.assertNotNull(vacancies);
         Assert.assertNotNull(vacancies.get(0));
+        Assert.assertNotNull(vacancies.get(0).getTitle());
+        Assert.assertNotNull(vacancies.get(0).getCompanyName());
+        Assert.assertNotNull(vacancies.get(0).getSiteName());
+        Assert.assertNotNull(vacancies.get(0).getUrl());
+        Assert.assertNotNull(vacancies.get(0).getDate());
     }
 
     @Test
@@ -26,6 +30,11 @@ public class VacanciesIT {
 
         Assert.assertNotNull(vacancies);
         Assert.assertNotNull(vacancies.get(0));
+        Assert.assertNotNull(vacancies.get(0).getTitle());
+        Assert.assertNotNull(vacancies.get(0).getCompanyName());
+        Assert.assertNotNull(vacancies.get(0).getSiteName());
+        Assert.assertNotNull(vacancies.get(0).getUrl());
+        Assert.assertNotNull(vacancies.get(0).getDate());
     }
 
     private <T> List<T> sendRequest(String path, Class<T> responseClass) {

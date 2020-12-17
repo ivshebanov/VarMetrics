@@ -24,7 +24,6 @@ public class HeadHunterTest {
         Assert.assertNotNull(vacancies.get(0).getCompanyName());
         Assert.assertNotNull(vacancies.get(0).getSiteName());
         Assert.assertNotNull(vacancies.get(0).getUrl());
-        Assert.assertNotNull(vacancies.get(0).getDateVacancy());
         Assert.assertNotNull(vacancies.get(0).getDate());
     }
 }
