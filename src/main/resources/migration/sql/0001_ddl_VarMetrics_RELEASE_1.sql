@@ -39,3 +39,12 @@ CREATE TABLE VAR_METRICS.vacancy
     date         TIMESTAMP              NOT NULL,
     PRIMARY KEY (id)
 );
+
+-- changeset ivshebanov:ddl_initial_step_varmetrics#0006
+ALTER TABLE VAR_METRICS.usd ALTER id ADD GENERATED ALWAYS AS IDENTITY;
+
+-- changeset ivshebanov:ddl_initial_step_varmetrics#0007
+ALTER TABLE VAR_METRICS.eur ALTER id ADD GENERATED ALWAYS AS IDENTITY;
+
+-- changeset ivshebanov:ddl_initial_step_varmetrics#0008
+ALTER TABLE VAR_METRICS.vacancy ALTER id ADD GENERATED ALWAYS AS IDENTITY;
