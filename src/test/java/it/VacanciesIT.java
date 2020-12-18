@@ -13,8 +13,10 @@ public class VacanciesIT {
 
     @Test
     public void scanAndGetAllVacanciesTest() {
+        // WHEN
         List<Vacancy> vacancies = sendRequest("/vacancies/scan", Vacancy.class);
 
+        // THEN
         Assert.assertNotNull(vacancies);
         Assert.assertNotNull(vacancies.get(0));
         Assert.assertNotNull(vacancies.get(0).getTitle());
@@ -26,8 +28,10 @@ public class VacanciesIT {
 
     @Test
     public void getAllVacancies() {
+        // WHEN
         List<Vacancy> vacancies = sendRequest("/vacancies", Vacancy.class);
 
+        // THEN
         Assert.assertNotNull(vacancies);
         Assert.assertNotNull(vacancies.get(0));
         Assert.assertNotNull(vacancies.get(0).getTitle());
