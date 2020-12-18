@@ -6,14 +6,20 @@ spring:
     console:
       enabled: true
       path: /h2
+      settings:
+        trace: false
+        web-allow-others: false
   datasource:
     url: @h2.url@
     driverClassName: org.h2.Driver
     username: sa
     password:
+    schema: classpath:h2/schema.sql
+    data: classpath:h2/test_data.sql
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+    generate-ddl: true
   liquibase:
     enabled: false

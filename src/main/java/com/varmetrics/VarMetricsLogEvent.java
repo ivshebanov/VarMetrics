@@ -3,7 +3,7 @@ package com.varmetrics;
 public enum VarMetricsLogEvent {
 
     //VacancyService
-    VAR_METRICS_0("Поиск вакансий: {}"),
+    VAR_METRICS_0("Поиск вакансий по запросу: {}, на сайтах: {}"),
     VAR_METRICS_1("Найдено вакансий: {}"),
 
     //HeadHunter

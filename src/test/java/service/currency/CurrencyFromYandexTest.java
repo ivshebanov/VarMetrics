@@ -13,17 +13,19 @@ public class CurrencyFromYandexTest {
 
     @Test
     public void getUsdTest() throws IOException {
-
+        // WHEN
         double usd = currency.getUsd();
 
+        // THEN
         Assert.assertTrue(usd != 0);
     }
 
     @Test
     public void getEurTest() throws IOException {
-
+        // WHEN
         double eur = currency.getEur();
 
+        // THEN
         Assert.assertTrue(eur != 0);
     }
 }

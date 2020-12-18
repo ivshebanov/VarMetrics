@@ -33,23 +33,30 @@ public class JdbcConnectionDevTest extends SpringDevContextTest {
 
     @Test
     public void vacancyRepositoryCheck() {
+        // WHEN
         List<Vacancy> vacancyRepositoryAll = vacancyRepository.findAll();
 
+        // THEN
         Assert.assertNotNull(vacancyRepositoryAll);
+        Assert.assertNotNull(vacancyRepositoryAll.get(0));
     }
 
     @Test
     public void usdRepositoryCheck() {
+        // WHEN
         List<Usd> usdRepositoryAll = usdRepository.findAll();
 
+        // THEN
         Assert.assertNotNull(usdRepositoryAll);
         Assert.assertNotNull(usdRepositoryAll.get(0));
     }
 
     @Test
     public void eurRepositoryCheck() {
+        // WHEN
         List<Eur> eurRepositoryAll = eurRepository.findAll();
 
+        // THEN
         Assert.assertNotNull(eurRepositoryAll);
         Assert.assertNotNull(eurRepositoryAll.get(0));
     }

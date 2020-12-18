@@ -28,4 +28,9 @@ public class SuperJob extends Company {
         vacancy.setDate(ZonedDateTime.now(ZoneId.of("Europe/Moscow")));
         return Collections.singletonList(vacancy);
     }
+
+    @Override
+    public String toString() {
+        return "SuperJob";
+    }
 }

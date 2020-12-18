@@ -17,7 +17,7 @@ import static java.util.Collections.singletonList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class VacancyServiceTest {
+public class  VacancyServiceTest {
 
     @Test
     public void scanAndGetAllVacanciesTest() {

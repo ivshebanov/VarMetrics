@@ -29,11 +29,11 @@ CREATE TABLE VAR_METRICS.vacancy
 (
     id           BIGINT                 NOT NULL,
     title        CHARACTER VARYING(200) NOT NULL,
-    company_name CHARACTER VARYING(200)  NOT NULL,
+    company_name CHARACTER VARYING(200) NOT NULL,
     company_logo CHARACTER VARYING(200),
     salary       CHARACTER VARYING(200),
     location     CHARACTER VARYING(200),
-    site_name    CHARACTER VARYING(200)  NOT NULL,
+    site_name    CHARACTER VARYING(200) NOT NULL,
     url          CHARACTER VARYING(200) NOT NULL,
     date_vacancy CHARACTER VARYING(200),
     date         TIMESTAMP              NOT NULL,
