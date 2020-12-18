@@ -6,7 +6,7 @@
           :loading="loading"
           :disabled="loading"
           color="info"
-          @click="loader = 'loading'"
+          @click="loader = loader + 1"
       >
         Загрузить вакансии
         <template v-slot:loader>
@@ -66,18 +66,15 @@ export default {
   },
   watch: {
     loader() {
-      this.l = this.loader
-      this[this.l] = !this[this.l]
+      this.loading = !this.loading
 
       this.$resource("/vacancies/scan").get().then(result =>
           result.json().then(data => {
                 data.forEach(vacancy => this.vacancyList.push(vacancy))
-                this[this.l] = false
-                this.loader = null
+                this.loading = false
               }
           )
       )
-
     },
   },
   created: function () {
