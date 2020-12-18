@@ -15,4 +15,4 @@ logging:
     org:
       springframework:
         web: DEBUG
-      hibernate: DEBUG
+      hibernate: ERROR
