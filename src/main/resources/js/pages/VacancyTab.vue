@@ -68,8 +68,8 @@ export default {
     loader() {
       this.loading = !this.loading
 
-      this.$resource("/vacancies/scan").get().then(result =>
-          result.json().then(data => {
+      this.$http.get("/vacancies/scan").then(response =>
+          response.json().then(data => {
                 data.forEach(vacancy => this.vacancyList.push(vacancy))
                 this.loading = false
               }
@@ -78,8 +78,8 @@ export default {
     },
   },
   created: function () {
-    this.$resource("/vacancies").get().then(result =>
-        result.json().then(data =>
+    this.$http.get("/vacancies").then(response =>
+        response.json().then(data =>
             data.forEach(usd => this.vacancyList.push(usd)),
         )
     )
