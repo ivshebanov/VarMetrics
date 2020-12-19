@@ -68,7 +68,7 @@ export default {
     loader() {
       this.loading = !this.loading
 
-      this.$http.get("/vacancies/scan", {},{ timeout: 40000, emulateJSON: true, emulateHTTP: true }).then(response =>
+      this.$http.get("/vacancies/scan", {timeout: 40000}).then(response =>
           response.json().then(data => {
                 data.forEach(vacancy => this.vacancyList.push(vacancy))
                 this.loading = false
