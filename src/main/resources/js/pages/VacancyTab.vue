@@ -72,8 +72,6 @@ export default {
           response.json().then(data => {
                 data.forEach(vacancy => this.vacancyList.push(vacancy))
                 this.loading = false
-              }, {
-                console.log(JSON.stringify(data));
               }
           )
       )
