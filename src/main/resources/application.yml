@@ -8,5 +8,4 @@ spring:
             non_contextual_creation: true
 
 logging:
-#  config: classpath:log4j2.xml
-  level: debug
+  config: classpath:log4j2.xml
