@@ -14,5 +14,5 @@ logging:
   level:
     org:
       springframework:
-        web: DEBAG
+        web: DEBUG
       hibernate: INFO
