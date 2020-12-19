@@ -19,13 +19,13 @@
     </Appenders>
 
     <Loggers>
-        <Root level="DEBUG">
+        <Root level="INFO">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
         </Root>
 
         <Logger name="com.varmetrics" level="DEBUG"/>
-        <Logger name="c.z.h.p.HikariPool" level="DEBUG"/>
+        <Logger name="o.s.web.servlet.DispatcherServlet" level="DEBUG"/>
     </Loggers>
 
 </Configuration>

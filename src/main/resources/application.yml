@@ -7,12 +7,5 @@ spring:
           lob:
             non_contextual_creation: true
 
-#logging:
-#  config: classpath:log4j2.xml
-
 logging:
-  level:
-    org:
-      springframework:
-        web: DEBUG
-      hibernate: INFO
+  config: classpath:log4j2.xml
