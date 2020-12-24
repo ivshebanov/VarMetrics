@@ -4,7 +4,7 @@ public enum VarMetricsLogEvent {
 
     //VacancyService
     VAR_METRICS_0("Поиск вакансий по запросу: {}, на сайтах: {}"),
-    VAR_METRICS_1("Найдено вакансий: {}"),
+    VAR_METRICS_1("Найдено вакансий: {} за: {} секунд"),
 
     //HeadHunter
     VAR_METRICS_2("Количество страниц с вакансиями: {}"),

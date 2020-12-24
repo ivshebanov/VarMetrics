@@ -55,11 +55,15 @@ public class VacancyService {
 
     public synchronized List<Vacancy> scanAndGetAllVacancies(String searchString) {
         try {
+            long currentTimeMillis = System.currentTimeMillis();
             List<Vacancy> resultList = new LinkedList<>();
             logger.info(VAR_METRICS_0.getText(), searchString, companyList);
             companyList.forEach(company -> resultList.addAll(company.getVacancies(searchString)));
 
-            logger.info(VAR_METRICS_1.getText(), resultList.size());
+            long lastTimeMillis = System.currentTimeMillis();
+            long timeS = (lastTimeMillis - currentTimeMillis) / 1000;
+            logger.info(VAR_METRICS_1.getText(), resultList.size(), timeS);
+
             doInTransaction(() -> {
                 vacancyRepository.deleteAll();
                 vacancyRepository.saveAll(resultList);
