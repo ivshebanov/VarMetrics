@@ -3,14 +3,13 @@ package com.varmetrics.service.company;
 import com.varmetrics.dao.model.Vacancy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
-@Component
+//@Component
 public class SuperJob extends Company {
 
     private static final Logger logger = LoggerFactory.getLogger(SuperJob.class);
