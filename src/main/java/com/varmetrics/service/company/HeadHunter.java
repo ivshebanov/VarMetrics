@@ -94,7 +94,7 @@ public class HeadHunter extends Company {
         try {
             return Jsoup
                     .connect(url)
-                    .userAgent("Chrome/4.0.249.0 Safari/532.5")
+                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.365")
                     .referrer("http://google.ru")
                     .timeout(20000)
                     .get();
