@@ -64,10 +64,12 @@ public class VacancyService {
             long timeS = (lastTimeMillis - currentTimeMillis) / 1000;
             logger.info(VAR_METRICS_1.getText(), resultList.size(), timeS);
 
-            doInTransaction(() -> {
-                vacancyRepository.deleteAll();
-                vacancyRepository.saveAll(resultList);
-            });
+            if (resultList.size() > 0) {
+                doInTransaction(() -> {
+                    vacancyRepository.deleteAll();
+                    vacancyRepository.saveAll(resultList);
+                });
+            }
             return vacancyRepository.findAll();
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
