@@ -53,7 +53,7 @@ public class VacancyService {
         }
     }
 
-    public synchronized List<Vacancy> scanAndGetAllVacancies(String searchString) {
+    public List<Vacancy> scanAndGetAllVacancies(String searchString) {
         try {
             long currentTimeMillis = System.currentTimeMillis();
             List<Vacancy> resultList = new LinkedList<>();
