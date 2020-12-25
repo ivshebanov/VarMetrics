@@ -1,6 +1,7 @@
 package com.varmetrics.service.company;
 
 import com.varmetrics.dao.model.Vacancy;
+import com.varmetrics.service.DaemonThreadFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,8 +14,13 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_2;
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_3;
@@ -22,6 +28,8 @@ import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_4;
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_5;
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_6;
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_7;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_8;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_9;
 
 @Component
 public class HeadHunter extends Company {
@@ -32,32 +40,57 @@ public class HeadHunter extends Company {
 
     @Override
     public List<Vacancy> getVacancies(String searchString) {
-        List<Vacancy> resultList = new LinkedList<>();
-        int pageNumber = 0;
-        int pageLastNumber = getPageLastNumber(searchString);
+
+        ExecutorService executorService = Executors.newFixedThreadPool(3, new DaemonThreadFactory());
+        List<Vacancy> resultList = Collections.synchronizedList(new LinkedList<>());
+        AtomicInteger pageNumber = new AtomicInteger(0);
+        AtomicInteger pageLastNumber = new AtomicInteger(getPageLastNumber(searchString));
+
         logger.debug(VAR_METRICS_2.getText(), pageLastNumber);
 
-        while (pageNumber != pageLastNumber) {
-            String url = String.format(URL_FORMAT, replaceSpaceWithPlus(searchString), pageNumber);
-            logger.debug(VAR_METRICS_3.getText(), pageNumber, url);
-            Document landingPage = getDocument(url);
-            if (landingPage == null) break;
+        try {
+            for (int i = 0; i < 3; i++) {
+                executorService.execute(() -> {
+                    List<Vacancy> resultListLocal = new LinkedList<>();
+                    int pageNumberLocal = 0;
+                    int pageLastNumberLocal = pageLastNumber.get();
 
-            Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
-            if (vacancies == null || vacancies.isEmpty()) break;
-            logger.debug(VAR_METRICS_4.getText(), vacancies.size(), pageNumber);
-            for (Element vacancyEl : vacancies) {
-                if (vacancyEl == null) break;
-                Vacancy vacancy = getVacancy(vacancyEl);
-                resultList.add(vacancy);
+                    while (pageNumberLocal != pageLastNumberLocal) {
+                        pageNumberLocal = pageNumber.getAndIncrement();
+                        String url = String.format(URL_FORMAT, replaceSpaceWithPlus(searchString), pageNumberLocal);
+                        logger.debug(VAR_METRICS_3.getText(), pageNumberLocal, url);
+                        Document landingPage = getDocument(url);
+                        if (landingPage == null) break;
+
+                        Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
+                        if (vacancies == null || vacancies.isEmpty()) break;
+                        logger.debug(VAR_METRICS_4.getText(), vacancies.size(), pageNumberLocal);
+                        for (Element vacancyEl : vacancies) {
+                            if (vacancyEl == null) break;
+                            Vacancy vacancy = getVacancy(vacancyEl);
+                            resultListLocal.add(vacancy);
+                        }
+                    }
+                    resultList.addAll(resultListLocal);
+                });
             }
-            pageNumber++;
+
+            executorService.shutdown();
+            while (!executorService.awaitTermination(1L, TimeUnit.MINUTES)) {
+                System.out.println("Not yet. Still waiting for termination");
+            }
+        } catch (InterruptedException e) {
+            logger.debug(VAR_METRICS_8.getText());
+        } catch (Exception e) {
+            logger.debug(VAR_METRICS_9.getText());
+        } finally {
+            executorService.shutdownNow();
         }
         logger.debug(VAR_METRICS_5.getText(), resultList.size());
         return resultList;
     }
 
-    private Vacancy getVacancy(Element element) {
+    private synchronized Vacancy getVacancy(Element element) {
         Element title = element.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-title").first();
         Element companyName = element.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-employer").first();
         Element salary = element.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-compensation").first();
