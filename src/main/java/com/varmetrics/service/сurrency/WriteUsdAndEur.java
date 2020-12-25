@@ -4,6 +4,7 @@ import com.varmetrics.dao.model.Eur;
 import com.varmetrics.dao.model.Usd;
 import com.varmetrics.dao.repository.EurRepository;
 import com.varmetrics.dao.repository.UsdRepository;
+import com.varmetrics.service.DaemonThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 public class WriteUsdAndEur {
@@ -62,13 +62,5 @@ public class WriteUsdAndEur {
     public String interrupt() {
         this.interrupt = !this.interrupt;
         return "OK";
-    }
-
-    class DaemonThreadFactory implements ThreadFactory {
-        public Thread newThread(Runnable r) {
-            Thread thread = new Thread(r);
-            thread.setDaemon(true);
-            return thread;
-        }
     }
 }
