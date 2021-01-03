@@ -38,41 +38,19 @@ public class HeadHunter extends Company {
     private static final String URL_FORMAT = "http://hh.ru/search/vacancy?text=%s&page=%d";
     private static final String SITE_NAME = "hh.ru";
 
+    private final ExecutorService executorService = Executors.newFixedThreadPool(3, new DaemonThreadFactory());
+    private final List<Vacancy> resultList = Collections.synchronizedList(new LinkedList<>());
+    private final AtomicInteger pageNumber = new AtomicInteger(0);
+    private final AtomicInteger pageLastNumber = new AtomicInteger();
+
     @Override
     public List<Vacancy> getVacancies(String searchString) {
-
-        ExecutorService executorService = Executors.newFixedThreadPool(3, new DaemonThreadFactory());
-        List<Vacancy> resultList = Collections.synchronizedList(new LinkedList<>());
-        AtomicInteger pageNumber = new AtomicInteger(0);
-        AtomicInteger pageLastNumber = new AtomicInteger(getPageLastNumber(searchString));
-
-        logger.debug(VAR_METRICS_2.getText(), pageLastNumber);
+        pageLastNumber.set(getPageLastNumber(searchString));
+        logger.debug(VAR_METRICS_2.getText(), pageLastNumber.get());
 
         try {
             for (int i = 0; i < 3; i++) {
-                executorService.execute(() -> {
-                    List<Vacancy> resultListLocal = new LinkedList<>();
-                    int pageNumberLocal = 0;
-                    int pageLastNumberLocal = pageLastNumber.get();
-
-                    while (pageNumberLocal != pageLastNumberLocal) {
-                        pageNumberLocal = pageNumber.getAndIncrement();
-                        String url = String.format(URL_FORMAT, replaceSpaceWithPlus(searchString), pageNumberLocal);
-                        logger.debug(VAR_METRICS_3.getText(), pageNumberLocal, url);
-                        Document landingPage = getDocument(url);
-                        if (landingPage == null) break;
-
-                        Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
-                        if (vacancies == null || vacancies.isEmpty()) break;
-                        logger.debug(VAR_METRICS_4.getText(), vacancies.size(), pageNumberLocal);
-                        for (Element vacancyEl : vacancies) {
-                            if (vacancyEl == null) break;
-                            Vacancy vacancy = getVacancy(vacancyEl);
-                            resultListLocal.add(vacancy);
-                        }
-                    }
-                    resultList.addAll(resultListLocal);
-                });
+                executorService.execute(() -> scanVacancy(searchString));
             }
 
             executorService.shutdown();
@@ -88,6 +66,30 @@ public class HeadHunter extends Company {
         }
         logger.debug(VAR_METRICS_5.getText(), resultList.size());
         return resultList;
+    }
+
+    private void scanVacancy(String searchString) {
+        List<Vacancy> resultListLocal = new LinkedList<>();
+        int pageNumberLocal = 0;
+        int pageLastNumberLocal = pageLastNumber.get();
+
+        while (pageNumberLocal != pageLastNumberLocal) {
+            pageNumberLocal = pageNumber.getAndIncrement();
+            String url = String.format(URL_FORMAT, replaceSpaceWithPlus(searchString), pageNumberLocal);
+            logger.debug(VAR_METRICS_3.getText(), pageNumberLocal, url);
+            Document landingPage = getDocument(url);
+            if (landingPage == null) break;
+
+            Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
+            if (vacancies == null || vacancies.isEmpty()) break;
+            logger.debug(VAR_METRICS_4.getText(), vacancies.size(), pageNumberLocal);
+            for (Element vacancyEl : vacancies) {
+                if (vacancyEl == null) break;
+                Vacancy vacancy = getVacancy(vacancyEl);
+                resultListLocal.add(vacancy);
+            }
+        }
+        resultList.addAll(resultListLocal);
     }
 
     private synchronized Vacancy getVacancy(Element element) {
