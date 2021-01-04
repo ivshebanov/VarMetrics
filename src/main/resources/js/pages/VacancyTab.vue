@@ -1,21 +1,41 @@
 <template>
   <v-main>
     <v-container>
-      <v-btn
-          class="ma-2"
-          :loading="loading"
-          :disabled="loading"
-          color="info"
-          @click="loader = loader + 1"
-      >
-        Загрузить вакансии
-        <template v-slot:loader>
-        <span class="custom-loader">
-          <v-icon light>cached</v-icon>
-        </span>
-        </template>
-      </v-btn>
 
+      <v-form>
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field v-model="message" outlined clearable label="Ищем" type="text">
+                <template v-slot:append>
+                  <v-fade-transition leave-absolute>
+                    <v-progress-circular v-if="loading" size="24" color="info" indeterminate/>
+                    <img v-else
+                         width="24"
+                         height="24"
+                         src="https://image.freepik.com/free-vector/cowboy-vector-logo-icon-illustration_1893-1431.jpg"
+                         alt="">
+                  </v-fade-transition>
+                </template>
+                <template v-slot:append-outer>
+                  <v-btn outlined
+                         color="info"
+                         :loading="loading"
+                         :disabled="loading"
+                         @click="loader = loader + 1">
+                    Загрузить вакансии
+                    <template v-slot:loader>
+                      <span class="custom-loader">
+                        <v-icon light>cached</v-icon>
+                      </span>
+                    </template>
+                  </v-btn>
+                </template>
+              </v-text-field>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
 
       <v-card>
         <v-card-title>
@@ -59,6 +79,7 @@ export default {
         {text: 'Дата размещения', value: 'dateVacancy', width: "10%"},
       ],
       search: '',
+      message: '',
       loader: null,
       loading: false,
       vacancyList: []
@@ -68,10 +89,15 @@ export default {
     loader() {
       this.loading = !this.loading
 
-      this.$http.get("/vacancies/scan", {}, {timeout: 50000, emulateJSON: true, emulateHTTP: true}).then(response =>
+      this.$http.get(
+          "/vacancies/scan",
+          {params: {searchString: this.message}},
+          {timeout: 50000, emulateJSON: true, emulateHTTP: true}
+      ).then(response =>
           response.json().then(data => {
                 data.forEach(vacancy => this.vacancyList.push(vacancy))
                 this.loading = false
+                this.message = ''
               }
           )
       )
@@ -80,7 +106,7 @@ export default {
   created: function () {
     this.$http.get("/vacancies").then(response =>
         response.json().then(data =>
-            data.forEach(usd => this.vacancyList.push(usd)),
+            data.forEach(usd => this.vacancyList.push(usd))
         )
     )
   }
