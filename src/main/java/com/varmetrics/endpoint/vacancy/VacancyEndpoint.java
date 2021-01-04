@@ -4,6 +4,7 @@ import com.varmetrics.dao.model.Vacancy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class VacancyEndpoint {
     }
 
     @GetMapping("/scan")
-    public List<Vacancy> scanAndGetAllVacancies() {
-        return vacancyService.scanAndGetAllVacancies("Java Москва");
+    public List<Vacancy> scanAndGetAllVacancies(@RequestParam String searchString) {
+        return vacancyService.scanAndGetAllVacancies(searchString);
     }
 }

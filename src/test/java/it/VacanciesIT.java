@@ -44,6 +44,7 @@ public class VacanciesIT {
     private <T> List<T> sendRequest(String path, Class<T> responseClass) {
         return given()
                 .contentType(ContentType.JSON)
+                .formParam("searchString", "Java Москва")
                 .when()
                 .get(path)
                 .then()
