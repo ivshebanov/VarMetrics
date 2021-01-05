@@ -26,10 +26,10 @@ import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_2;
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_3;
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_4;
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_5;
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_6;
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_7;
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_8;
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_9;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_3;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_4;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_1;
+import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_2;
 
 @Component
 public class HeadHunter extends Company {
@@ -57,10 +57,10 @@ public class HeadHunter extends Company {
             while (!executorService.awaitTermination(1L, TimeUnit.MINUTES)) {
                 System.out.println("Not yet. Still waiting for termination");
             }
-        } catch (InterruptedException e) {
-            logger.debug(VAR_METRICS_8.getText());
-        } catch (Exception e) {
-            logger.debug(VAR_METRICS_9.getText());
+        } catch (InterruptedException ex) {
+            logger.debug(VAR_METRICS_ERROR_1.getText(), ex.getMessage());
+        } catch (Exception ex) {
+            logger.debug(VAR_METRICS_ERROR_2.getText(), ex.getMessage());
         } finally {
             executorService.shutdownNow();
         }
@@ -133,10 +133,10 @@ public class HeadHunter extends Company {
                     .referrer("http://google.ru")
                     .timeout(20000)
                     .get();
-        } catch (SocketTimeoutException e) {
-            logger.error(e.getMessage(), VAR_METRICS_6.getText());
-        } catch (IOException e) {
-            logger.error(e.getMessage(), VAR_METRICS_7.getText());
+        } catch (SocketTimeoutException ex) {
+            logger.error(VAR_METRICS_ERROR_3.getText(), ex.getMessage());
+        } catch (IOException ex) {
+            logger.error(VAR_METRICS_ERROR_4.getText(), ex.getMessage());
         }
         return null;
     }
