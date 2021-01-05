@@ -1,21 +1,22 @@
 package service.company;
 
 import com.varmetrics.dao.model.Vacancy;
-import com.varmetrics.service.company.HeadHunter;
+import com.varmetrics.service.company.ExecuteHeadHunter;
+import com.varmetrics.service.company.PooledExecuteHeadHunter;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
 
-public class HeadHunterTest {
+public class PooledExecuteHeadHunterTest {
 
     @Test
     public void getVacanciesTest() {
         // GIVEN
-        HeadHunter headHunter = new HeadHunter();
+        PooledExecuteHeadHunter pooledExecuteHeadHunter = new PooledExecuteHeadHunter(ExecuteHeadHunter::new);
 
         // WHEN
-        List<Vacancy> vacancies = headHunter.getVacancies("Java Москва");
+        List<Vacancy> vacancies = pooledExecuteHeadHunter.getVacancies("Java Москва");
 
         // THEN
         Assert.assertNotNull(vacancies);
