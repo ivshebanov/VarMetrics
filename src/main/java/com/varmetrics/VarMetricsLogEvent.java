@@ -11,10 +11,12 @@ public enum VarMetricsLogEvent {
     VAR_METRICS_3("Сканируем страницу №: {}, url: {}"),
     VAR_METRICS_4("Найдено: {} вакансий на странице №: {}"),
     VAR_METRICS_5("На hh найдено: {} вакансии"),
-    VAR_METRICS_6("Время ожидания истекло"),
-    VAR_METRICS_7("Не удалось получить страницу вакансий"),
-    VAR_METRICS_8("Ошибка завершения потока"),
-    VAR_METRICS_9("Неизвестная ошибка"),
+
+    //ERROR
+    VAR_METRICS_ERROR_1("Ошибка завершения потока"),
+    VAR_METRICS_ERROR_2("Неизвестная ошибка"),
+    VAR_METRICS_ERROR_3("Время ожидания истекло"),
+    VAR_METRICS_ERROR_4("Не удалось получить страницу вакансий"),
     ;
 
     private final String title;
