@@ -1,8 +1,8 @@
 package service.company;
 
 import com.varmetrics.dao.model.Vacancy;
-import com.varmetrics.service.company.ExecuteHeadHunter;
-import com.varmetrics.service.company.PooledExecuteHeadHunter;
+import com.varmetrics.service.company.headHunter.ExecuteHeadHunter;
+import com.varmetrics.service.company.headHunter.PooledExecuteHeadHunter;
 import org.junit.Assert;
 import org.junit.Test;
 
