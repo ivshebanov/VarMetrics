@@ -1,7 +1,8 @@
-package com.varmetrics.service.company;
+package com.varmetrics.service.company.headHunter;
 
 import com.varmetrics.dao.model.Vacancy;
 import com.varmetrics.service.DaemonThreadFactory;
+import com.varmetrics.service.company.Company;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -50,7 +51,6 @@ public class PooledExecuteHeadHunter extends Company {
         PooledExecuteHeadHunter.searchString = replaceSpaceWithPlus(searchString);
         PooledExecuteHeadHunter.pageLastNumber.set(getPageLastNumber());
         logger.debug(VAR_METRICS_2.getText(), pageLastNumber.get());
-
 
         List<Vacancy> resultList = new LinkedList<>();
         List<Future<List<Vacancy>>> submits = new LinkedList<>();

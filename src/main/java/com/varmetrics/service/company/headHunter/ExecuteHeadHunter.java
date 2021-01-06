@@ -1,4 +1,4 @@
-package com.varmetrics.service.company;
+package com.varmetrics.service.company.headHunter;
 
 import com.varmetrics.dao.model.Vacancy;
 import org.jsoup.Jsoup;
