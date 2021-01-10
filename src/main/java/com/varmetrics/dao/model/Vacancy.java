@@ -15,24 +15,25 @@ import java.time.ZonedDateTime;
 
 @Data
 @Entity
-@Table(name = "eur")
-public class Eur {
+@Table(name = "vacancy")
+public class Vacancy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String title;
+    private String companyName;
+    private String companyLogo;
+    private String salary;
+    private String location;
+    private String siteName;
+    private String url;
+    private String dateVacancy;
 
     @JsonDeserialize(using = ZonedDateTimeDeserializer.class)
     @JsonSerialize(using = ZonedDateTimeSerializer.class)
     private ZonedDateTime date;
 
-    private double course;
-
-    public Eur() {
-    }
-
-    public Eur(ZonedDateTime date, double course) {
-        this.date = date;
-        this.course = course;
+    public Vacancy() {
     }
 }

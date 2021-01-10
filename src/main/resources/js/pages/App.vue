@@ -1,49 +1,54 @@
 <template>
-  <v-card color="basil">
-    <v-card-title class="text-center justify-center py-6">
-      <h1 class="font-weight-bold display-3 basil--text">
-        VarMetrics
-      </h1>
-    </v-card-title>
+  <v-app>
+    <v-card color="basil">
+      <v-card-title class="text-center justify-center py-6">
+        <h1 class="font-weight-bold display-3 basil--text">
+          VarMetrics
+        </h1>
+      </v-card-title>
 
-    <v-tabs v-model="tab" background-color="basil" color="basil" grow>
-      <v-tab v-for="item in items" :key="item">
-        {{ item }}
-      </v-tab>
-    </v-tabs>
+      <v-tabs v-model="tab" background-color="basil" color="basil" grow>
+        <v-tab v-for="item in items" :key="item">
+          {{ item }}
+        </v-tab>
+      </v-tabs>
 
-    <v-tabs-items v-model="tab">
-      <v-tab-item v-for="item in items" :key="item">
-        <v-card color="basil" flat height="100vh">
-          <v-container v-if="item==='USD'">
-            <usd-tab :usd-list="usdList"/>
-          </v-container>
-          <v-container v-if="item==='EUR'">
-            <eur-tab :eur-list="eurList"/>
-          </v-container>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
-  </v-card>
+      <v-tabs-items v-model="tab">
+        <v-tab-item v-for="item in items" :key="item">
+          <v-card color="basil" flat height="100vh">
+            <v-container v-if="item==='Vacancy'">
+              <vacancy-tab/>
+            </v-container>
+            <v-container v-if="item==='USD'">
+              <usd-tab/>
+            </v-container>
+            <v-container v-if="item==='EUR'">
+              <eur-tab/>
+            </v-container>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
+    </v-card>
+  </v-app>
 </template>
 
 <script>
 import EurTab from "./EurTab.vue";
 import UsdTab from "./UsdTab.vue";
+import VacancyTab from "./VacancyTab.vue";
 
 export default {
   name: "App",
   components: {
     UsdTab,
-    EurTab
+    EurTab,
+    VacancyTab
   },
   data: () => ({
     tab: null,
     items: [
-      'USD', 'EUR',
-    ],
-    usdList: [],
-    eurList: []
+      'Vacancy', 'USD', 'EUR'
+    ]
   }),
 }
 </script>

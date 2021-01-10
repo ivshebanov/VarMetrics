@@ -23,3 +23,28 @@ CREATE TABLE VAR_METRICS.eur
     course DOUBLE precision NOT NULL,
     PRIMARY KEY (id)
 );
+
+-- changeset ivshebanov:ddl_initial_step_varmetrics#0005
+CREATE TABLE VAR_METRICS.vacancy
+(
+    id           BIGINT                 NOT NULL,
+    title        CHARACTER VARYING(200) NOT NULL,
+    company_name CHARACTER VARYING(200) NOT NULL,
+    company_logo CHARACTER VARYING(200),
+    salary       CHARACTER VARYING(200),
+    location     CHARACTER VARYING(200),
+    site_name    CHARACTER VARYING(200) NOT NULL,
+    url          CHARACTER VARYING(200) NOT NULL,
+    date_vacancy CHARACTER VARYING(200),
+    date         TIMESTAMP              NOT NULL,
+    PRIMARY KEY (id)
+);
+
+-- changeset ivshebanov:ddl_initial_step_varmetrics#0006
+ALTER TABLE VAR_METRICS.usd ALTER id ADD GENERATED ALWAYS AS IDENTITY;
+
+-- changeset ivshebanov:ddl_initial_step_varmetrics#0007
+ALTER TABLE VAR_METRICS.eur ALTER id ADD GENERATED ALWAYS AS IDENTITY;
+
+-- changeset ivshebanov:ddl_initial_step_varmetrics#0008
+ALTER TABLE VAR_METRICS.vacancy ALTER id ADD GENERATED ALWAYS AS IDENTITY;

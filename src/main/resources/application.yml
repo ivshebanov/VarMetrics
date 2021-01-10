@@ -1,7 +1,11 @@
 spring:
   jpa:
+    open-in-view: false
     properties:
       hibernate:
         jdbc:
           lob:
             non_contextual_creation: true
+
+logging:
+  config: classpath:log4j2.xml

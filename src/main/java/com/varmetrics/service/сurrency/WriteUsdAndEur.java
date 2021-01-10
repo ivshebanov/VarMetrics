@@ -1,25 +1,23 @@
-package com.varmetrics.service;
+package com.varmetrics.service.сurrency;
 
 import com.varmetrics.dao.model.Eur;
 import com.varmetrics.dao.model.Usd;
 import com.varmetrics.dao.repository.EurRepository;
 import com.varmetrics.dao.repository.UsdRepository;
-import com.varmetrics.service.сurrency.Currency;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.varmetrics.service.DaemonThreadFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.TimeZone;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 public class WriteUsdAndEur {
 
-    private static final Logger logger = LogManager.getLogger(WriteUsdAndEur.class);
+    private static final Logger logger = LoggerFactory.getLogger(WriteUsdAndEur.class);
 
     private final UsdRepository usdRepository;
     private final EurRepository eurRepository;
@@ -64,13 +62,5 @@ public class WriteUsdAndEur {
     public String interrupt() {
         this.interrupt = !this.interrupt;
         return "OK";
-    }
-
-    class DaemonThreadFactory implements ThreadFactory {
-        public Thread newThread(Runnable r) {
-            Thread thread = new Thread(r);
-            thread.setDaemon(true);
-            return thread;
-        }
     }
 }

@@ -1,6 +1,6 @@
 package com.varmetrics.endpoint.start;
 
-import com.varmetrics.service.WriteUsdAndEur;
+import com.varmetrics.service.сurrency.WriteUsdAndEur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
