@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_2;
@@ -33,24 +32,22 @@ import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_4;
 public class PooledExecuteHeadHunter extends Company {
 
     private static final Logger logger = LoggerFactory.getLogger(PooledExecuteHeadHunter.class);
-
-    public static final String URL_FORMAT = "http://hh.ru/search/vacancy?text=%s&page=%d";
-    public static final AtomicInteger pageLastNumber = new AtomicInteger();
-    public static String searchString;
-
     private final ExecutorService executorService = Executors.newFixedThreadPool(3, new DaemonThreadFactory());
     private final Supplier<ExecuteHeadHunter> executeHeadHunter;
+    private final HeadHunterState headHunterState;
 
     @Autowired
-    public PooledExecuteHeadHunter(Supplier<ExecuteHeadHunter> executeHeadHunter) {
+    public PooledExecuteHeadHunter(Supplier<ExecuteHeadHunter> executeHeadHunter,
+                                   HeadHunterState headHunterState) {
+
         this.executeHeadHunter = executeHeadHunter;
+        this.headHunterState = headHunterState;
     }
 
     @Override
-    public List<Vacancy> getVacancies(String searchString) {
-        PooledExecuteHeadHunter.searchString = replaceSpaceWithPlus(searchString);
-        PooledExecuteHeadHunter.pageLastNumber.set(getPageLastNumber());
-        logger.debug(VAR_METRICS_2.getText(), pageLastNumber.get());
+    public List<Vacancy> call() throws Exception {
+        this.headHunterState.setPageLastNumber(getPageLastNumber());
+        logger.debug(VAR_METRICS_2.getText(), headHunterState.getPageLastNumber());
 
         List<Vacancy> resultList = new LinkedList<>();
         List<Future<List<Vacancy>>> submits = new LinkedList<>();
@@ -69,8 +66,7 @@ public class PooledExecuteHeadHunter extends Company {
         } catch (Exception ex) {
             logger.debug(VAR_METRICS_ERROR_2.getText(), ex.getMessage());
         } finally {
-            PooledExecuteHeadHunter.searchString = "";
-            PooledExecuteHeadHunter.pageLastNumber.set(0);
+            this.headHunterState.setPageLastNumber(0);
         }
         logger.debug(VAR_METRICS_5.getText(), resultList.size());
         return resultList;
@@ -78,7 +74,7 @@ public class PooledExecuteHeadHunter extends Company {
 
     private int getPageLastNumber() {
 
-        String url = String.format(URL_FORMAT, searchString, 0);
+        String url = String.format(headHunterState.getUrlFormat(), headHunterState.getSearchString(), 0);
         Document landingPage = getDocument(url);
         if (landingPage == null) return 0;
 
@@ -107,6 +103,11 @@ public class PooledExecuteHeadHunter extends Company {
 
     private String replaceSpaceWithPlus(String searchString) {
         return searchString.replace(" ", "+");
+    }
+
+    @Override
+    public void setSearchString(String searchString) {
+        this.headHunterState.setSearchString(replaceSpaceWithPlus(searchString));
     }
 
     @Override
