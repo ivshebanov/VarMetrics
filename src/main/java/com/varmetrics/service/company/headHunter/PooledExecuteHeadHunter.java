@@ -80,12 +80,14 @@ public class PooledExecuteHeadHunter extends Company {
 
         String url = String.format(URL_FORMAT, searchString, 0);
         Document landingPage = getDocument(url);
+        //TODO: логировать url, landingPage == null
         if (landingPage == null) return 0;
 
-        Elements pageSelection = landingPage.getElementsByAttributeValue("data-qa", "pager-page");
+        Elements pageSelection = landingPage.select("span.pager-item-not-in-short-range > span.pager-item-not-in-short-range > a");
+        //TODO: логировать pageSelection.size()
         if (pageSelection.size() == 0) return 0;
-        Element pageLastElement = pageSelection.get(pageSelection.size() - 1);
-        String pageLastString = pageLastElement.attr("data-page");
+        String pageLastString = pageSelection.text();
+        //TODO: логировать pageLastString
         return Integer.parseInt(pageLastString);
     }
 
@@ -93,7 +95,7 @@ public class PooledExecuteHeadHunter extends Company {
         try {
             return Jsoup
                     .connect(url)
-                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.365")
+                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36")
                     .referrer("http://google.ru")
                     .timeout(20000)
                     .get();
