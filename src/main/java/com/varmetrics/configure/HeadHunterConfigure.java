@@ -2,6 +2,7 @@ package com.varmetrics.configure;
 
 import com.varmetrics.service.company.headHunter.ExecuteHeadHunter;
 import com.varmetrics.service.company.headHunter.HeadHunterState;
+import com.varmetrics.service.company.headHunter.PooledExecuteHeadHunter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,17 +14,24 @@ import java.util.function.Supplier;
 public class HeadHunterConfigure {
 
     @Bean
+    public PooledExecuteHeadHunter pooledExecuteHeadHunter(Supplier<ExecuteHeadHunter> executeHeadHunter,
+                                                           HeadHunterState headHunterState) {
+
+        return new PooledExecuteHeadHunter(executeHeadHunter, headHunterState);
+    }
+
+    @Bean
     public Supplier<ExecuteHeadHunter> executeHeadHunter(HeadHunterState headHunterState) {
         return () -> new ExecuteHeadHunter(headHunterState);
     }
 
     @Bean
-    public ExecutorService executorService() {
-        return Executors.newCachedThreadPool();
+    public HeadHunterState headHunterState() {
+        return new HeadHunterState();
     }
 
     @Bean
-    public HeadHunterState headHunterState() {
-        return new HeadHunterState();
+    public ExecutorService executorService() {
+        return Executors.newCachedThreadPool();
     }
 }

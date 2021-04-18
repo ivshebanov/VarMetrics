@@ -28,7 +28,6 @@ import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_2;
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_3;
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_4;
 
-@Component
 public class PooledExecuteHeadHunter extends Company {
 
     private static final Logger logger = LoggerFactory.getLogger(PooledExecuteHeadHunter.class);
@@ -36,7 +35,6 @@ public class PooledExecuteHeadHunter extends Company {
     private final Supplier<ExecuteHeadHunter> executeHeadHunter;
     private final HeadHunterState headHunterState;
 
-    @Autowired
     public PooledExecuteHeadHunter(Supplier<ExecuteHeadHunter> executeHeadHunter,
                                    HeadHunterState headHunterState) {
 
