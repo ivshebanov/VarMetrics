@@ -14,6 +14,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_0;
 import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_1;
@@ -26,14 +28,17 @@ public class VacancyService {
     private final TransactionTemplate transactionTemplate;
     private final VacancyRepository vacancyRepository;
     private final List<Company> companyList;
+    private final ExecutorService executorService;
 
     @Autowired
     public VacancyService(TransactionTemplate transactionTemplate,
                           VacancyRepository vacancyRepository,
-                          List<Company> companyList) {
+                          List<Company> companyList,
+                          ExecutorService executorService) {
         this.transactionTemplate = transactionTemplate;
         this.vacancyRepository = vacancyRepository;
         this.companyList = companyList;
+        this.executorService = executorService;
     }
 
     public List<Vacancy> getAllVacancies() {
@@ -54,27 +59,39 @@ public class VacancyService {
     }
 
     public List<Vacancy> scanAndGetAllVacancies(String searchString) {
-        try {
-            long currentTimeMillis = System.currentTimeMillis();
-            List<Vacancy> resultList = new LinkedList<>();
-            logger.info(VAR_METRICS_0.getText(), searchString, companyList);
-            companyList.forEach(company -> resultList.addAll(company.getVacancies(searchString)));
+        synchronized (executorService) {
+            try {
+                long currentTimeMillis = System.currentTimeMillis();
+                logger.info(VAR_METRICS_0.getText(), searchString, companyList);
 
-            long lastTimeMillis = System.currentTimeMillis();
-            long timeS = (lastTimeMillis - currentTimeMillis) / 1000;
-            logger.info(VAR_METRICS_1.getText(), resultList.size(), timeS);
+                List<Vacancy> resultList = new LinkedList<>();
+                List<Future<List<Vacancy>>> submits = new LinkedList<>();
 
-            if (resultList.size() > 0) {
-                doInTransaction(() -> {
-                    vacancyRepository.deleteAll();
-                    vacancyRepository.saveAll(resultList);
+                companyList.forEach(company -> {
+                    company.setSearchString(searchString);
+                    submits.add(executorService.submit(company));
                 });
+
+                for (Future<List<Vacancy>> submit : submits) {
+                    resultList.addAll(submit.get());
+                }
+
+                long lastTimeMillis = System.currentTimeMillis();
+                long timeS = (lastTimeMillis - currentTimeMillis) / 1000;
+                logger.info(VAR_METRICS_1.getText(), resultList.size(), timeS);
+
+                if (resultList.size() > 0) {
+                    doInTransaction(() -> {
+                        vacancyRepository.deleteAll();
+                        vacancyRepository.saveAll(resultList);
+                    });
+                }
+                return vacancyRepository.findAll();
+            } catch (Exception ex) {
+                logger.error(ex.getMessage(), ex);
             }
-            return vacancyRepository.findAll();
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
     }
 
     private void doInTransaction(CallWithoutResult callWithoutResult) {

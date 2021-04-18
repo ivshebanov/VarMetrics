@@ -25,16 +25,20 @@ public class ExecuteHeadHunter implements Callable<List<Vacancy>> {
 
     private static final Logger logger = LoggerFactory.getLogger(ExecuteHeadHunter.class);
     private volatile boolean isShutdown = false;
+    private final HeadHunterState headHunterState;
+
+    public ExecuteHeadHunter(HeadHunterState headHunterState) {
+        this.headHunterState = headHunterState;
+    }
 
     @Override
     public List<Vacancy> call() throws Exception {
         List<Vacancy> resultList = new LinkedList<>();
-        String searchString = PooledExecuteHeadHunter.searchString;
-        String urlFormat = PooledExecuteHeadHunter.URL_FORMAT;
+        String urlFormat = headHunterState.getUrlFormat();
         int pageNumber;
 
-        while ((pageNumber = PooledExecuteHeadHunter.pageLastNumber.getAndDecrement()) >= 0 && !isShutdown) {
-            String url = String.format(urlFormat, searchString, pageNumber);
+        while ((pageNumber = headHunterState.getAndDecrement()) >= 0 && !isShutdown) {
+            String url = String.format(urlFormat, headHunterState.getSearchString(), pageNumber);
             logger.debug(VAR_METRICS_3.getText(), pageNumber, url);
             Document landingPage = getDocument(url);
             if (landingPage == null) break;
