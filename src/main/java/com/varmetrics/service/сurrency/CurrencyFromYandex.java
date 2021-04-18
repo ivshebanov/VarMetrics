@@ -36,7 +36,7 @@ public class CurrencyFromYandex implements Currency {
     private Document getYandex() throws IOException {
         return Jsoup
                 .connect("https://yandex.ru/")
-                .userAgent("Chrome/4.0.249.0 Safari/532.5")
+                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36")
                 .referrer("http://www.google.com")
                 .timeout(20000)
                 .get();
