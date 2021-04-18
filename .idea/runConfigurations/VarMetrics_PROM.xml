@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="VarMetrics-PROM" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="varmetrics" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.varmetrics.Application" />
+    <option name="ACTIVE_PROFILES" value="PROM" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
