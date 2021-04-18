@@ -43,7 +43,7 @@ public class ExecuteHeadHunter implements Callable<List<Vacancy>> {
             Document landingPage = getDocument(url);
             if (landingPage == null) break;
 
-            Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
+            Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy vacancy-serp__vacancy_standard");
             if (vacancies == null || vacancies.isEmpty()) break;
             logger.debug(VAR_METRICS_4.getText(), vacancies.size(), pageNumber);
             for (Element vacancyEl : vacancies) {
@@ -81,7 +81,7 @@ public class ExecuteHeadHunter implements Callable<List<Vacancy>> {
         try {
             return Jsoup
                     .connect(url)
-                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.365")
+                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36")
                     .referrer("http://google.ru")
                     .timeout(20000)
                     .get();
