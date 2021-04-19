@@ -1,23 +1,18 @@
 package com.varmetrics.service.company.headHunter;
 
 import com.varmetrics.dao.model.Vacancy;
-import com.varmetrics.service.DaemonThreadFactory;
 import com.varmetrics.service.company.Company;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.function.Supplier;
 
@@ -31,15 +26,17 @@ import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_4;
 public class PooledExecuteHeadHunter extends Company {
 
     private static final Logger logger = LoggerFactory.getLogger(PooledExecuteHeadHunter.class);
-    private final ExecutorService executorService = Executors.newFixedThreadPool(3, new DaemonThreadFactory());
+    private final ExecutorService executorServiceDaemonThread;
     private final Supplier<ExecuteHeadHunter> executeHeadHunter;
     private final HeadHunterState headHunterState;
 
     public PooledExecuteHeadHunter(Supplier<ExecuteHeadHunter> executeHeadHunter,
-                                   HeadHunterState headHunterState) {
+                                   HeadHunterState headHunterState,
+                                   ExecutorService executorServiceDaemonThread) {
 
         this.executeHeadHunter = executeHeadHunter;
         this.headHunterState = headHunterState;
+        this.executorServiceDaemonThread = executorServiceDaemonThread;
     }
 
     @Override
@@ -53,7 +50,7 @@ public class PooledExecuteHeadHunter extends Company {
         try {
             for (int i = 0; i < 3; i++) {
                 ExecuteHeadHunter executeHeadHunter = this.executeHeadHunter.get();
-                submits.add(executorService.submit(executeHeadHunter));
+                submits.add(executorServiceDaemonThread.submit(executeHeadHunter));
             }
 
             for (Future<List<Vacancy>> submit: submits) {

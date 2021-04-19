@@ -12,6 +12,9 @@ public enum VarMetricsLogEvent {
     VAR_METRICS_4("Найдено: {} вакансий на странице №: {}"),
     VAR_METRICS_5("На hh найдено: {} вакансии"),
 
+    //SuperJob
+    VAR_METRICS_6("На SuperJob найдено: {} вакансии"),
+
     //ERROR
     VAR_METRICS_ERROR_1("Ошибка завершения потока: {}"),
     VAR_METRICS_ERROR_2("Неизвестная ошибка: {}"),
