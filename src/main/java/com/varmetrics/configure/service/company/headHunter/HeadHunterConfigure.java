@@ -1,5 +1,6 @@
-package com.varmetrics.configure;
+package com.varmetrics.configure.service.company.headHunter;
 
+import com.varmetrics.service.DaemonThreadFactory;
 import com.varmetrics.service.company.headHunter.ExecuteHeadHunter;
 import com.varmetrics.service.company.headHunter.HeadHunterState;
 import com.varmetrics.service.company.headHunter.PooledExecuteHeadHunter;
@@ -15,9 +16,10 @@ public class HeadHunterConfigure {
 
     @Bean
     public PooledExecuteHeadHunter pooledExecuteHeadHunter(Supplier<ExecuteHeadHunter> executeHeadHunter,
-                                                           HeadHunterState headHunterState) {
+                                                           HeadHunterState headHunterState,
+                                                           ExecutorService executorServiceDaemonThread) {
 
-        return new PooledExecuteHeadHunter(executeHeadHunter, headHunterState);
+        return new PooledExecuteHeadHunter(executeHeadHunter, headHunterState, executorServiceDaemonThread);
     }
 
     @Bean
@@ -33,5 +35,10 @@ public class HeadHunterConfigure {
     @Bean
     public ExecutorService executorService() {
         return Executors.newCachedThreadPool();
+    }
+
+    @Bean
+    public ExecutorService executorServiceDaemonThread() {
+        return Executors.newFixedThreadPool(3, new DaemonThreadFactory());
     }
 }

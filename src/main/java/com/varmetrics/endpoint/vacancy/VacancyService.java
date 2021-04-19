@@ -72,6 +72,7 @@ public class VacancyService {
                     submits.add(executorService.submit(company));
                 });
 
+                Thread.sleep(10000);
                 for (Future<List<Vacancy>> submit : submits) {
                     resultList.addAll(submit.get());
                 }
