@@ -1,13 +1,5 @@
 package service.company;
 
-import com.varmetrics.dao.model.Vacancy;
-import com.varmetrics.service.company.Company;
-import com.varmetrics.service.company.SuperJob;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.List;
-
 public class SuperJobTest {
 
 //    @Test
