@@ -1,10 +1,7 @@
 package context;
 
 import com.varmetrics.Application;
-import com.varmetrics.endpoint.dollor.UsdEndpoint;
-import com.varmetrics.endpoint.euro.EurEndpoint;
 import com.varmetrics.endpoint.vacancy.VacancyEndpoint;
-import com.varmetrics.service.сurrency.WriteUsdAndEur;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,22 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class SpringDevContextTest {
 
     @Autowired
-    private WriteUsdAndEur writeUsdAndEur;
-
-    @Autowired
-    private EurEndpoint eurEndpoint;
-
-    @Autowired
-    private UsdEndpoint usdEndpoint;
-
-    @Autowired
     private VacancyEndpoint vacancyEndpoint;
 
     @Test
     public void testInit() {
-        Assert.assertNotNull(writeUsdAndEur);
-        Assert.assertNotNull(eurEndpoint);
-        Assert.assertNotNull(usdEndpoint);
         Assert.assertNotNull(vacancyEndpoint);
     }
 }

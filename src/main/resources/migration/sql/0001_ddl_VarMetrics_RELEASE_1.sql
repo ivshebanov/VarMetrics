@@ -48,3 +48,9 @@ ALTER TABLE VAR_METRICS.eur ALTER id ADD GENERATED ALWAYS AS IDENTITY;
 
 -- changeset ivshebanov:ddl_initial_step_varmetrics#0008
 ALTER TABLE VAR_METRICS.vacancy ALTER id ADD GENERATED ALWAYS AS IDENTITY;
+
+-- changeset ivshebanov:ddl_initial_step_varmetrics#0009
+DROP TABLE VAR_METRICS.usd;
+
+-- changeset ivshebanov:ddl_initial_step_varmetrics#0010
+DROP TABLE VAR_METRICS.eur;

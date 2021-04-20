@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HeadHunterState {
 
     private final String urlFormat = "http://hh.ru/search/vacancy?text=%s&page=%d";
-    private volatile AtomicInteger pageLastNumber = new AtomicInteger();
+    private final AtomicInteger pageLastNumber = new AtomicInteger();
     private String searchString;
 
     public int getPageLastNumber() {
