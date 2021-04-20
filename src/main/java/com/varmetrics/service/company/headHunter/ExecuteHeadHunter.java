@@ -24,8 +24,8 @@ import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_4;
 public class ExecuteHeadHunter implements Callable<List<Vacancy>> {
 
     private static final Logger logger = LoggerFactory.getLogger(ExecuteHeadHunter.class);
-    private volatile boolean isShutdown = false;
     private final HeadHunterState headHunterState;
+    private volatile boolean isShutdown = false;
 
     public ExecuteHeadHunter(HeadHunterState headHunterState) {
         this.headHunterState = headHunterState;
@@ -41,13 +41,19 @@ public class ExecuteHeadHunter implements Callable<List<Vacancy>> {
             String url = String.format(urlFormat, headHunterState.getSearchString(), pageNumber);
             logger.debug(VAR_METRICS_3.getText(), pageNumber, url);
             Document landingPage = getDocument(url);
-            if (landingPage == null) break;
+            if (landingPage == null) {
+                break;
+            }
 
             Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy vacancy-serp__vacancy_standard");
-            if (vacancies == null || vacancies.isEmpty()) break;
+            if (vacancies == null || vacancies.isEmpty()) {
+                break;
+            }
             logger.debug(VAR_METRICS_4.getText(), vacancies.size(), pageNumber);
             for (Element vacancyEl : vacancies) {
-                if (vacancyEl == null) break;
+                if (vacancyEl == null) {
+                    break;
+                }
                 Vacancy vacancy = getVacancy(vacancyEl);
                 resultList.add(vacancy);
             }
@@ -80,11 +86,11 @@ public class ExecuteHeadHunter implements Callable<List<Vacancy>> {
     private synchronized Document getDocument(String url) {
         try {
             return Jsoup
-                    .connect(url)
-                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36")
-                    .referrer("http://google.ru")
-                    .timeout(20000)
-                    .get();
+                .connect(url)
+                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36")
+                .referrer("http://google.ru")
+                .timeout(20000)
+                .get();
         } catch (SocketTimeoutException ex) {
             logger.error(VAR_METRICS_ERROR_3.getText(), ex.getMessage());
         } catch (IOException ex) {

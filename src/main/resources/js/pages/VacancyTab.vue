@@ -106,7 +106,7 @@ export default {
   created: function () {
     this.$http.get("/vacancies").then(response =>
         response.json().then(data =>
-            data.forEach(usd => this.vacancyList.push(usd))
+            data.forEach(vacancy => this.vacancyList.push(vacancy))
         )
     )
   }
