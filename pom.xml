@@ -222,7 +222,7 @@
         <profile>
             <id>run.it</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <build>
                 <plugins>
@@ -233,6 +233,8 @@
                             <profiles>
                                 <profile>DEV</profile>
                             </profiles>
+                            <!-- Если отключены все тесты, то нет смысла стартовать -->
+                            <skip>${skipTests}</skip>
                         </configuration>
                         <executions>
                             <execution>
