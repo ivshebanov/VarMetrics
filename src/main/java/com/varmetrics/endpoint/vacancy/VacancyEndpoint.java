@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.apache.commons.lang3.Validate.notNull;
+
 @RestController
 @RequestMapping("/vacancies")
 public class VacancyEndpoint {
@@ -17,7 +19,7 @@ public class VacancyEndpoint {
 
     @Autowired
     public VacancyEndpoint(VacancyService vacancyService) {
-        this.vacancyService = vacancyService;
+        this.vacancyService = notNull(vacancyService, "vacancyService must not be null");
     }
 
     @GetMapping

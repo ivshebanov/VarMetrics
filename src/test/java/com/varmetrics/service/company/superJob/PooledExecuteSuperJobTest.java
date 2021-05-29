@@ -1,22 +1,30 @@
-package service.company;
+package com.varmetrics.service.company.superJob;
+
 
 import com.varmetrics.dao.model.Vacancy;
 import com.varmetrics.service.company.Company;
-import com.varmetrics.service.company.SuperJob;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-public class SuperJobTest {
+public class PooledExecuteSuperJobTest {
 
     @Test
-    public void getVacanciesTest() {
+    public void call() throws ExecutionException, InterruptedException {
         // GIVEN
-        Company superJob = new SuperJob();
+
+        final ExecutorService executorService = Executors.newCachedThreadPool();
+        Company superJob = new PooledExecuteSuperJob();
 
         // WHEN
-        List<Vacancy> vacancies = superJob.getVacancies("Java Москва");
+        final Future<List<Vacancy>> submit = executorService.submit(superJob);
+
+        final List<Vacancy> vacancies = submit.get();
 
         // THEN
         Assert.assertNotNull(vacancies);

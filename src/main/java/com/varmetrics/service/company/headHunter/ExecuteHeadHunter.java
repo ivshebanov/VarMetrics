@@ -16,34 +16,49 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_3;
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_4;
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_3;
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_ERROR_4;
+import static com.varmetrics.VarMetricsEvent.VAR_METRICS_10;
+import static com.varmetrics.VarMetricsEvent.VAR_METRICS_11;
+import static com.varmetrics.VarMetricsEvent.VAR_METRICS_3;
+import static com.varmetrics.VarMetricsEvent.VAR_METRICS_4;
+import static com.varmetrics.VarMetricsEvent.VAR_METRICS_ERROR_3;
+import static com.varmetrics.VarMetricsEvent.VAR_METRICS_ERROR_4;
+import static org.apache.commons.lang3.Validate.notNull;
 
 public class ExecuteHeadHunter implements Callable<List<Vacancy>> {
 
     private static final Logger logger = LoggerFactory.getLogger(ExecuteHeadHunter.class);
+    private final HeadHunterState headHunterState;
     private volatile boolean isShutdown = false;
+
+    public ExecuteHeadHunter(HeadHunterState headHunterState) {
+        this.headHunterState = notNull(headHunterState, "headHunterState must not be null");
+    }
 
     @Override
     public List<Vacancy> call() throws Exception {
         List<Vacancy> resultList = new LinkedList<>();
-        String searchString = PooledExecuteHeadHunter.searchString;
-        String urlFormat = PooledExecuteHeadHunter.URL_FORMAT;
+        String urlFormat = headHunterState.getUrlFormat();
         int pageNumber;
 
-        while ((pageNumber = PooledExecuteHeadHunter.pageLastNumber.getAndDecrement()) >= 0 && !isShutdown) {
-            String url = String.format(urlFormat, searchString, pageNumber);
+        while ((pageNumber = headHunterState.getAndDecrement()) >= 0 && !isShutdown) {
+            String url = String.format(urlFormat, headHunterState.getSearchString(), pageNumber);
             logger.debug(VAR_METRICS_3.getText(), pageNumber, url);
             Document landingPage = getDocument(url);
-            if (landingPage == null) break;
+            if (landingPage == null) {
+                logger.debug(VAR_METRICS_10.getText(), url);
+                break;
+            }
 
-            Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
-            if (vacancies == null || vacancies.isEmpty()) break;
+            Elements vacancies = landingPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy vacancy-serp__vacancy_standard");
+            if (vacancies == null || vacancies.isEmpty()) {
+                logger.debug(VAR_METRICS_11.getText());
+                break;
+            }
             logger.debug(VAR_METRICS_4.getText(), vacancies.size(), pageNumber);
             for (Element vacancyEl : vacancies) {
-                if (vacancyEl == null) break;
+                if (vacancyEl == null) {
+                    break;
+                }
                 Vacancy vacancy = getVacancy(vacancyEl);
                 resultList.add(vacancy);
             }
@@ -77,7 +92,7 @@ public class ExecuteHeadHunter implements Callable<List<Vacancy>> {
         try {
             return Jsoup
                     .connect(url)
-                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.365")
+                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36")
                     .referrer("http://google.ru")
                     .timeout(20000)
                     .get();

@@ -1,16 +1,20 @@
 package com.varmetrics;
 
-public enum VarMetricsLogEvent {
+public enum VarMetricsEvent {
 
-    //VacancyService
+    //LogEvent
     VAR_METRICS_0("Поиск вакансий по запросу: {}, на сайтах: {}"),
     VAR_METRICS_1("Найдено вакансий: {} за: {} секунд"),
-
-    //HeadHunter
     VAR_METRICS_2("Количество страниц с вакансиями: {}"),
     VAR_METRICS_3("Сканируем страницу №: {}, url: {}"),
     VAR_METRICS_4("Найдено: {} вакансий на странице №: {}"),
     VAR_METRICS_5("На hh найдено: {} вакансии"),
+    VAR_METRICS_6("На SuperJob найдено: {} вакансии"),
+    VAR_METRICS_7("Найдено компаний: {}, запущено потоков: {}"),
+    VAR_METRICS_8("Запущено дочерних потоков в PooledExecuteHeadHunter: {}"),
+    VAR_METRICS_9("Колличество страниц pageSelection: {}"),
+    VAR_METRICS_10("Не удалось создать страницу landingPage url: {}"),
+    VAR_METRICS_11("Елемент vacancies не найден"),
 
     //ERROR
     VAR_METRICS_ERROR_1("Ошибка завершения потока: {}"),
@@ -21,7 +25,7 @@ public enum VarMetricsLogEvent {
 
     private final String title;
 
-    VarMetricsLogEvent(String title) {
+    VarMetricsEvent(String title) {
         this.title = title;
     }
 

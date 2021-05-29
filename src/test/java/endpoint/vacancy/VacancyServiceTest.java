@@ -12,25 +12,37 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import static java.util.Collections.singletonList;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class  VacancyServiceTest {
+public class VacancyServiceTest {
 
     @Test
-    public void scanAndGetAllVacanciesTest() {
+    public void scanAndGetAllVacanciesTest() throws ExecutionException, InterruptedException {
         // GIVEN
         String searchString = "Java Москва";
         List<Vacancy> vacanciesExpect = getVacancies();
 
         VacancyRepository vacancyRepository = mock(VacancyRepository.class);
         when(vacancyRepository.findAll()).thenReturn(vacanciesExpect);
-        Company company = mock(Company.class);
-        when(company.getVacancies(searchString)).thenReturn(vacanciesExpect);
 
-        VacancyService vacancyService = new VacancyService(mock(TransactionTemplate.class), vacancyRepository, singletonList(company));
+        Company company = mock(Company.class);
+        Future<List<Vacancy>> listFuture = mock(Future.class);
+        when(listFuture.get()).thenReturn(vacanciesExpect);
+        ExecutorService executorService = mock(ExecutorService.class);
+        when(executorService.submit(company)).thenReturn(listFuture);
+
+        VacancyService vacancyService = new VacancyService(
+                mock(TransactionTemplate.class),
+                vacancyRepository,
+                singletonList(company),
+                executorService);
 
         // WHEN
         List<Vacancy> vacanciesResult = vacancyService.scanAndGetAllVacancies(searchString);
@@ -40,14 +52,30 @@ public class  VacancyServiceTest {
     }
 
     @Test
+    public void deleteAllVacancies() {
+        // GIVEN
+        VacancyService vacancyService = new VacancyService(
+                mock(TransactionTemplate.class),
+                mock(VacancyRepository.class),
+                singletonList(mock(Company.class)),
+                mock(ExecutorService.class));
+
+        // WHEN
+        vacancyService.deleteAllVacancies();
+    }
+
+    @Test
     public void getAllVacanciesTest() {
         // GIVEN
         List<Vacancy> vacanciesExpect = getVacancies();
 
         VacancyRepository vacancyRepository = mock(VacancyRepository.class);
         when(vacancyRepository.findAll()).thenReturn(vacanciesExpect);
-        Company company = mock(Company.class);
-        VacancyService vacancyService = new VacancyService(mock(TransactionTemplate.class), vacancyRepository, singletonList(company));
+        VacancyService vacancyService = new VacancyService(
+                mock(TransactionTemplate.class),
+                vacancyRepository,
+                singletonList(mock(Company.class)),
+                mock(ExecutorService.class));
 
         // WHEN
         List<Vacancy> vacanciesResult = vacancyService.getAllVacancies();
