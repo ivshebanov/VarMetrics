@@ -1,6 +1,6 @@
 # VarMetrics
 
-[Сайт VarMetrics](https://varmetrics.herokuapp.com/){:target="_blank"}
+[Сайт VarMetrics](https://varmetrics.herokuapp.com/) {:target="_blank"}
 
 [Сайт VarMetrics-dev](https://varmetrics-dev.herokuapp.com/)
 
