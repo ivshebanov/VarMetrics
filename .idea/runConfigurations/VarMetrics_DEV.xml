@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="VarMetrics-DEV" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="varmetrics" />
+    <module name="VarMetrics" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.varmetrics.Application" />
     <option name="ACTIVE_PROFILES" value="DEV" />
     <option name="ALTERNATIVE_JRE_PATH" />

@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_6;
+import static com.varmetrics.VarMetricsEvent.VAR_METRICS_6;
 
 public class PooledExecuteSuperJob extends Company {
 

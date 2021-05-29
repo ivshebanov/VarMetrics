@@ -17,8 +17,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_0;
-import static com.varmetrics.VarMetricsLogEvent.VAR_METRICS_1;
+import static com.varmetrics.VarMetricsEvent.VAR_METRICS_0;
+import static com.varmetrics.VarMetricsEvent.VAR_METRICS_1;
+import static com.varmetrics.VarMetricsEvent.VAR_METRICS_7;
+import static org.apache.commons.lang3.Validate.notNull;
 
 @Service
 public class VacancyService {
@@ -35,10 +37,11 @@ public class VacancyService {
                           VacancyRepository vacancyRepository,
                           List<Company> companyList,
                           ExecutorService executorService) {
-        this.transactionTemplate = transactionTemplate;
-        this.vacancyRepository = vacancyRepository;
-        this.companyList = companyList;
-        this.executorService = executorService;
+
+        this.transactionTemplate = notNull(transactionTemplate, "transactionTemplate must not be null");
+        this.vacancyRepository = notNull(vacancyRepository, "vacancyRepository must not be null");
+        this.companyList = notNull(companyList, "companyList must not be null");
+        this.executorService = notNull(executorService, "executorService must not be null");
     }
 
     public List<Vacancy> getAllVacancies() {
@@ -71,8 +74,7 @@ public class VacancyService {
                     company.setSearchString(searchString);
                     submits.add(executorService.submit(company));
                 });
-
-                Thread.sleep(10000);
+                logger.debug(VAR_METRICS_7.getText(), companyList.size(), submits.size());
                 for (Future<List<Vacancy>> submit : submits) {
                     resultList.addAll(submit.get());
                 }
