@@ -1,3 +1,22 @@
+# Сведения о версии - VarMetrics - Версия 1.3.0.RELEASE
+
+### Задача
+
+[VAR-66](https://instapopular.atlassian.net/browse/VAR-66) Выпустить релиз 1.3.0.RELEASE <br>
+[VAR-65](https://instapopular.atlassian.net/browse/VAR-65) Переделать запуск на mvn <br>
+[VAR-64](https://instapopular.atlassian.net/browse/VAR-64) Открывать сайты из [Readme.md](http://Readme.md) в новой вкладке <br>
+[VAR-62](https://instapopular.atlassian.net/browse/VAR-62) Удалить все что связано с валютой <br>
+[VAR-61](https://instapopular.atlassian.net/browse/VAR-61) Передавать searchString в конструктор треда, а не в метод сет <br>
+[VAR-60](https://instapopular.atlassian.net/browse/VAR-60) Добавить больше логов <br>
+[VAR-59](https://instapopular.atlassian.net/browse/VAR-59) Поправить xPath в приложении <br>
+[VAR-57](https://instapopular.atlassian.net/browse/VAR-57) Создать Run/Debug Configurations <br>
+[VAR-56](https://instapopular.atlassian.net/browse/VAR-56) Переделать запуск поиска вакансий на разных сайтах <br>
+[VAR-55](https://instapopular.atlassian.net/browse/VAR-55) Обновить версии на 1.3.0 <br>
+[VAR-54](https://instapopular.atlassian.net/browse/VAR-54) Добавить [RELEASE.md](http://RELEASE.md) <br>
+[VAR-53](https://instapopular.atlassian.net/browse/VAR-53) Обдумать какие сайты с работой добавить в поиск <br>
+[VAR-47](https://instapopular.atlassian.net/browse/VAR-47) Тесты <br>
+[VAR-42](https://instapopular.atlassian.net/browse/VAR-42) Добавить SuperJob в поиск вакансий <br>
+
 # Release notes - VarMetrics - Version 1.2.0.RELEASE
 
 ### Задача
