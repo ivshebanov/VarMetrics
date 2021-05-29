@@ -295,6 +295,7 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <skip>${skipTests}</skip>
                             <enableAssertions>true</enableAssertions>
                             <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
                             <trimStackTrace>false</trimStackTrace>
