@@ -8,10 +8,6 @@ public class HeadHunterState {
     private final AtomicInteger pageLastNumber = new AtomicInteger();
     private String searchString;
 
-    public int getPageLastNumber() {
-        return pageLastNumber.get();
-    }
-
     public int getAndDecrement() {
         return pageLastNumber.getAndDecrement();
     }
