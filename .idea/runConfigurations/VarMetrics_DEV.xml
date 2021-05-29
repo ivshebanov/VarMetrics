@@ -1,12 +1,28 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="VarMetrics-DEV" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="VarMetrics" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="com.varmetrics.Application" />
-    <option name="ACTIVE_PROFILES" value="DEV" />
-    <option name="ALTERNATIVE_JRE_PATH" />
-    <option name="SHORTEN_COMMAND_LINE" value="NONE" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-    </method>
+  <configuration default="false" name="VarMetrics-DEV" type="MavenRunConfiguration" factoryName="Maven">
+    <MavenSettings>
+      <option name="myGeneralSettings" />
+      <option name="myRunnerSettings" />
+      <option name="myRunnerParameters">
+        <MavenRunnerParameters>
+          <option name="profiles">
+            <set />
+          </option>
+          <option name="goals">
+            <list>
+              <option value="spring-boot:run" />
+              <option value="-Dspring.profiles.active=DEV" />
+            </list>
+          </option>
+          <option name="pomFileName" />
+          <option name="profilesMap">
+            <map />
+          </option>
+          <option name="resolveToWorkspace" value="false" />
+          <option name="workingDirPath" value="$PROJECT_DIR$" />
+        </MavenRunnerParameters>
+      </option>
+    </MavenSettings>
+    <method v="2" />
   </configuration>
 </component>
