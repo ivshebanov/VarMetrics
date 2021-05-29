@@ -1,6 +1,7 @@
+package context;
+
 import com.varmetrics.dao.model.Vacancy;
 import com.varmetrics.dao.repository.VacancyRepository;
-import context.SpringDevContextTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
-public class JdbcConnectionDevTest extends SpringDevContextTest {
+public class JdbcConnectionDev extends SpringDevContext {
 
     @Autowired
     public VacancyRepository vacancyRepository;
