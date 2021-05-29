@@ -2,6 +2,8 @@
 
 [Сайт VarMetrics](https://varmetrics.herokuapp.com/)
 
+<a href="https://varmetrics.herokuapp.com/" target="_blank">Сайт VarMetrics</a>
+
 [Сайт VarMetrics-dev](https://varmetrics-dev.herokuapp.com/)
 
 
