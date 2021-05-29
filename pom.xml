@@ -13,7 +13,6 @@
     <properties>
         <java.version>11</java.version>
         <h2.url>jdbc:h2:mem:DbVarMetrics;DB_CLOSE_DELAY=-1;</h2.url>
-        <app.mainClass>com.varmetrics.Application</app.mainClass>
 
         <!-- Main configuration -->
         <spring-boot-starter.version>2.3.5.RELEASE</spring-boot-starter.version>
@@ -128,25 +127,6 @@
 
     <build>
         <finalName>varmetrics</finalName>
-        <directory>${project.basedir}/target/</directory>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources/</directory>
-                <filtering>true</filtering>
-            </resource>
-            <resource>
-                <directory>static</directory>
-                <targetPath>static</targetPath>
-                <filtering>false</filtering>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <filtering>true</filtering>
-            </testResource>
-        </testResources>
 
         <pluginManagement>
             <plugins>
@@ -177,16 +157,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>${app.mainClass}</mainClass>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -252,7 +222,7 @@
         <profile>
             <id>run.it</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
@@ -260,11 +230,11 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
-                            <!-- Если отключены все тесты, то нет смысла стартовать -->
-                            <skip>${skipTests}</skip>
                             <profiles>
                                 <profile>DEV</profile>
                             </profiles>
+                            <!-- Если отключены все тесты, то нет смысла стартовать -->
+                            <skip>${skipTests}</skip>
                         </configuration>
                         <executions>
                             <execution>
@@ -295,7 +265,6 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <skip>${skipTests}</skip>
                             <enableAssertions>true</enableAssertions>
                             <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
                             <trimStackTrace>false</trimStackTrace>
