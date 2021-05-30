@@ -5,7 +5,7 @@
 [Сайт VarMetrics-dev](https://varmetrics-dev.herokuapp.com/)
 
 
-### Сборка 
+### Сборка
 
 Сборка проекта со всеми тестами
 ```
