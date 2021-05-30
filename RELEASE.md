@@ -1,3 +1,13 @@
+# Сведения о версии - VarMetrics - Версия 1.3.1.RELEASE
+
+### Баг
+
+[VAR-68](https://instapopular.atlassian.net/browse/VAR-68) Не поднимается контекст на хероку
+
+### Задача
+
+[VAR-69](https://instapopular.atlassian.net/browse/VAR-69) Выпустить релиз 1.3.1.RELEASE
+
 # Сведения о версии - VarMetrics - Версия 1.3.0.RELEASE
 
 ### Задача
