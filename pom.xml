@@ -23,7 +23,7 @@
         <commons-lang3.version>3.11</commons-lang3.version>
 
         <!-- Tests configuration -->
-        <h2.version>1.4.200</h2.version>
+        <h2.version>2.1.210</h2.version>
         <rest-assured.version>4.2.0</rest-assured.version>
         <junit.version>4.13.1</junit.version>
         <testng.version>7.2.0</testng.version>
